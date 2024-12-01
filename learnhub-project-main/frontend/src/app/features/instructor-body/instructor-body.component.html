@@ -1,0 +1,161 @@
+<!-- <div class="container-fluid course-container" *ngIf="searchCourse != '' && courses.length != 0">
+    <h1>Your Search</h1>
+    <div class="row" id="courses" *ngIf="serchedCourses.length!=0; else noSearchResults">
+        <div *ngFor="let course of serchedCourses" class="col-xl-3 col-lg-3 col-md-6 col-sm-6 course-card">
+            <img [src]="course.course_img" class="card-img-top course_img" [alt]="'Image of ' + course.course_name" />
+            <div class="card-body">
+                <h5 class="card-title">{{ course.course_name }}</h5>
+                <p class="card-text">{{ course.course_description }}</p>
+                <div class="card-end">
+                    <div class="card-end-top">
+                        <strong>{{ course.course_price | currency: 'INR' }}</strong>
+                        <div class="star-rating">
+                            <span class="me-2"><strong>{{ course.ratings | number: '1.1-1' }}</strong></span>
+                            <ng-container *ngFor="let star of getStars(course.ratings)">
+                                <i class="fas" [ngClass]="star" style="color: rgba(19, 143, 133, 0.89)"></i>
+                            </ng-container>
+                            <span class="ms-2">( {{ course.no_of_enrollments }} )</span>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button class="btn btn-primary btn-edit" (click)="editContent($event,course.course_name)">Edit</button>
+                        <button class="btn btn-primary btn-add-content" data-bs-toggle="modal"
+                            data-bs-target="#contentadd" (click)="addcontent(course.course_name,$event)">ADD Content</button>
+                    </div>
+                </div>
+                <div class="card-footer mt-2 w-100">
+                    Created on: {{ course.course_created_at | date: 'medium' }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #noSearchResults>
+        <div class="alert alert-info text-center mt-4" role="alert">
+            <i class="fa fa-search display-4"></i>
+            <h3 class="mt-3">No results found for "{{ searchCourse }}"</h3>
+            <p class="mt-2">We couldn't find any courses matching your search. Double-check your keywords or try a different term.</p>
+            <a href="/courses" class="btn btn-secondary mt-3">Browse Other Courses</a>
+        </div>
+    </ng-template>
+    
+</div> -->
+
+<div *ngIf="courses.length!=0">
+    <div  class="container-fluid course-container" *ngIf="topCourses.length != 0; else noTopCourses">
+    <h1>Your Top Courses</h1>
+    <div class="row" id="courses" *ngIf="!message">
+        <div *ngFor="let course of topCourses" class="col-xl-3 col-lg-3 col-md-6 col-sm-6 course-card" [routerLink]="['/instructor/courses', course.course_name]" >
+            <img [src]="course.course_img" class="card-img-top course_img" [alt]="'Image of ' + course.course_name"/>
+            <div class="card-body">
+                <h5 class="card-title">{{ course.course_name }}</h5>
+                <p class="card-text">{{ course.course_description }}</p>
+                <div class="card-end">
+                    <div class="card-end-top">
+                        <strong>{{ course.course_price | currency: 'INR' }}</strong>
+                        <div class="star-rating">
+                            <span class="me-2"><strong>{{ course.ratings | number: '1.1-1' }}</strong></span>
+                            <ng-container *ngFor="let star of getStars(course.ratings)">
+                                <i class="fas" [ngClass]="star" style="color: rgba(19, 143, 133, 0.89)"></i>
+                            </ng-container>
+                            <span class="ms-2">( {{ course.no_of_enrollments }} )</span>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button class="btn btn-primary btn-edit" (click)="editContent($event,course.course_name)">Edit</button>
+                        <button class="btn btn-primary btn-add-content" data-bs-toggle="modal"
+                            data-bs-target="#contentadd" (click)="addcontent(course.course_name,$event)">ADD Content</button>
+                    </div>
+                </div>
+                <div class="card-footer mt-2 w-100">
+                    Created on: {{ course.course_created_at | date: 'medium' }}
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <ng-template #noTopCourses>
+        <div class="alert alert-warning text-center mt-4" role="alert">
+            <i class="bi bi-emoji-frown display-4"></i> 
+            <h3 class="mt-3">Oops! No top courses available right now.</h3>
+            <p class="mt-2">We're working on bringing you the best courses. Meanwhile, you can explore other categories.</p>
+            <a href="/courses" class="btn btn-primary mt-3">Explore Courses</a>
+        </div>
+    </ng-template>
+</div>
+
+
+<div class="container-fluid course-container" *ngIf="recentlyAddeddCourses.length != 0">
+    <h1>Recent Courses</h1>
+    <div class="row" id="courses" *ngIf="!message">
+        <div *ngFor="let course of recentlyAddeddCourses" class="col-xl-3 col-lg-3 col-md-6 col-sm-6 course-card"  [routerLink]="['/instructor/courses', course.course_name]">
+            <img [src]="course.course_img" class="card-img-top course_img" [alt]="'Image of ' + course.course_name" />
+            <div class="card-body">
+                <h5 class="card-title">{{ course.course_name }}</h5>
+                <p class="card-text">{{ course.course_description }}</p>
+                <div class="card-end">
+                    <div class="card-end-top">
+                        <strong>{{ course.course_price | currency: 'INR' }}</strong>
+                        <div class="star-rating">
+                            <span class="me-2"><strong>{{ course.ratings | number: '1.1-1' }}</strong></span>
+                            <ng-container *ngFor="let star of getStars(course.ratings)">
+                                <i class="fas" [ngClass]="star" style="color: rgba(19, 143, 133, 0.89)"></i>
+                            </ng-container>
+                            <span class="ms-2">( {{ course.no_of_enrollments }} )</span>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button class="btn btn-primary btn-edit" (click)="editContent($event,course.course_name)">Edit</button>
+                        <button class="btn btn-primary btn-add-content" data-bs-toggle="modal"
+                            data-bs-target="#contentadd" (click)="addcontent(course.course_name,$event)">ADD Content</button>
+                    </div>
+                </div>
+                <div class="card-footer mt-2 w-100">
+                    Created on: {{ course.course_created_at | date: 'medium' }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid course-container" *ngIf="courses.length != 0">
+    <h1>Your Courses</h1>
+    <div class="row" id="courses" *ngIf="!message">
+        <div *ngFor="let course of courses" class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-6 course-card"  [routerLink]="['/instructor/courses', course.course_name]">
+            <img [src]="course.course_img" class="card-img-top course_img" [alt]="'Image of ' + course.course_name" />
+            <div class="card-body">
+                <h5 class="card-title">{{ course.course_name }}</h5>
+                <p class="card-text">{{ course.course_description }}</p>
+                <div class="card-end">
+                    <div class="card-end-top">
+                        <strong>{{ course.course_price | currency: 'INR' }}</strong>
+                        <div class="star-rating">
+                            <span class="me-2"><strong>{{ course.ratings | number: '1.1-1' }}</strong></span>
+                            <ng-container *ngFor="let star of getStars(course.ratings)">
+                                <i class="fas" [ngClass]="star" style="color: rgba(19, 143, 133, 0.89)"></i>
+                            </ng-container>
+                            <span class="ms-2">( {{ course.no_of_enrollments }} )</span>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button class="btn btn-primary btn-edit" (click)="editContent($event,course.course_name)">Edit</button>
+                        <button class="btn btn-primary btn-add-content" data-bs-toggle="modal"
+                            data-bs-target="#contentadd" (click)="addcontent(course.course_name,$event)">ADD Content</button>
+                    </div>
+                </div>
+                <div class="card-footer mt-2 w-100">
+                    Created on: {{ course.course_created_at | date: 'medium' }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid" *ngIf="courses.length == 0" class="no-courses-container alert alert-warning text-center mt-4" role="alert" id="emty-container">
+    <i class="bi bi-search display-4"></i>
+    <h3 class="mt-3">No Courses Added Yet!</h3>
+    <p class="mt-2">It looks like your course library is empty. Start your journey by adding your first course!</p>
+    <a data-bs-toggle="modal" data-bs-target="#courseadd" class="btn btn-primary">Add Your First Course</a>
+</div>
+
+<app-add-content [courseName]="courseToAddContent" class="modal fade" id="contentadd"></app-add-content>

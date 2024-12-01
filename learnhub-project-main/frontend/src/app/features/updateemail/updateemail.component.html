@@ -1,0 +1,122 @@
+<section class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Email Update</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()" id="closeUpdateEmail"></button>
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger m-2 d-flex align-items-center">
+            <span class="me-2">{{ errorMessage }}</span>
+            <button type="button" class="btn-close ms-auto" aria-label="Close" (click)="errorMessage = null"></button>
+        </div>
+        <div class="modal-body mb-0">
+            <div *ngIf="stage==stages[0]" class="d-flex align-items-center justify-content-center w-100">
+                <h6>Do You Want Update Email?</h6>
+            </div>
+            <div *ngIf="stage==stages[1]||stage==stages[3]"
+                class="d-flex flex-column align-items-center justify-content-center w-100">
+
+                <img src="../../../assets/sent-mail.png" alt="" class="email-sent-img">
+                <p>Please check your Email</p>
+                <small class="mb-2">{{emailResponse}}</small>
+                <div class="d-flex align-items-center justify-content-around w-75 mb-2">
+                    <div class="col-auto">
+                        <input type="text" class="form-control otp-input" maxlength="1"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="otp[0]" (input)="handleInput($event, 0)"
+                            (keydown)="handleKeyDown($event, 0)" id="otp-input-0" autofocus="true" />
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" class="form-control otp-input" maxlength="1"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="otp[1]" (input)="handleInput($event, 1)"
+                            (keydown)="handleKeyDown($event, 1)" id="otp-input-1" />
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" class="form-control otp-input" maxlength="1"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="otp[2]" (input)="handleInput($event, 2)"
+                            (keydown)="handleKeyDown($event, 2)" id="otp-input-2" />
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" class="form-control otp-input" maxlength="1"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="otp[3]" (input)="handleInput($event, 3)"
+                            (keydown)="handleKeyDown($event, 3)" id="otp-input-3" />
+                    </div>
+                </div>
+                <div *ngIf="countdown > 0; else expiredMessage" class="mt-1">
+                    OTP is valid for <span [ngClass]="{'dead-line':(minutes==0&& seconds<10)}"> {{ minutes }}:{{ seconds
+                        < 10 ? '0' : '' }}{{ seconds }}</span> minutes. </div>
+                <ng-template #expiredMessage>
+                    <div class="text-danger">
+                        <p>Don't get the code? <a (click)="resend()" class="text-primary">click to resend</a>
+                        </p>
+                    </div>
+                </ng-template>
+            </div>
+            <div *ngIf="stage==stages[2]">
+                <form action="" [formGroup]="newEmailForm" style="height: fit-content;">
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" formControlName="new_email" id="new_email"
+                            placeholder="Enter New Email"
+                            [ngClass]="{'border-danger': newEmailForm.get('new_email')?.invalid && newEmailForm.get('new_email')?.touched, 'border-success': newEmailForm.get('new_email')?.valid}">
+                        <label for="new_email" class="form-label"
+                            [ngClass]="{'text-danger': newEmailForm.get('new_email')?.invalid && newEmailForm.get('new_email')?.touched}">New
+                            Email</label>
+                        <div class="error-message"
+                            *ngIf="newEmailForm.get('new_email')?.touched && newEmailForm.get('new_email')?.invalid">
+                            <span class="text-danger" *ngIf="newEmailForm.get('new_email')?.errors?.['required']">Email
+                                is
+                                required</span>
+                            <span class="text-danger"
+                                *ngIf="newEmailForm.get('new_email')?.errors?.['new_email'] || newEmailForm.get('new_email')?.errors?.['pattern']">Invalid
+                                Email</span>
+                        </div>
+                    </div>
+                    <div class="mb-3"></div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" formControlName="confirm_email" id="confirm_email"
+                            placeholder="Enter Confirm Email"
+                            [ngClass]="{'border-danger':newEmailForm.get('confirm_email')?.touched&&(!isMatching() || newEmailForm.get('confirm_email')?.invalid),'border-success':newEmailForm.get('confirm_email')?.valid && isMatching()}">
+                        <label for="confirm_email" class="form-label"
+                            [ngClass]="{'text-danger':newEmailForm.get('confirm_email')?.touched&&(!isMatching() || newEmailForm.get('confirm_email')?.invalid)}">Confirm
+                            Email</label>
+                        <div class="error-message" *ngIf="newEmailForm.get('confirm_email')?.touched">
+                            <span class="text-danger"
+                                *ngIf="newEmailForm.get('confirm_email')?.errors?.['required']">Confirm Email is
+                                required</span>
+                            <span class="text-danger"
+                                *ngIf="newEmailForm.get('confirm_email')?.errors?.['confirm_email'] || newEmailForm.get('confirm_email')?.errors?.['pattern']">Invalid
+                                Confirm Email</span>
+                            <span class="text-danger" *ngIf="!isMatching()">Email Mismatch</span>
+                        </div>
+                    </div>
+                </form>
+
+                <div *ngIf="countdown > 0" class="mt-1 d-flex align-items-center justify-content-center w-100"><p>Token is valid for <span [ngClass]="{'dead-line':(minutes==0&& seconds<10)}"> {{ minutes }}:{{seconds < 10 ? '0' : '' }}{{ seconds }}</span> minutes. </p></div>
+            </div>
+
+            <div *ngIf="stage==stages[4]" class="d-flex align-items-center justify-content-center w-100 pb-4">
+                <div class="spinner-border" role="status" style="width: 7em; height: 7em;"></div>
+            </div>
+        </div>
+        <div class="modal-footer" *ngIf="stage!=stages[4]">
+            <div *ngIf="stage==stages[0]" class="d-flex align-items-center justify-content-between w-100">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" (click)="close()">Cancel</button>
+                <button class="btn btn-primary" (click)="confirm()">Confirm</button>
+            </div>
+            <div *ngIf="stage==stages[1]" class="d-flex align-items-center justify-content-between w-100">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" (click)="close()">Cancel</button>
+                <button class="btn btn-primary" (click)="verifyOTP()"
+                    [disabled]="countdown<=0||!isValidOTP()">Verify</button>
+            </div>
+            <div *ngIf="stage==stages[2]" class="d-flex align-items-center justify-content-between w-100">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" (click)="close()">Cancel</button>
+                <button type="submit" class="btn btn-primary"
+                    [disabled]="countdown<=0||newEmailForm.invalid||!isMatching()"
+                    (click)="verifyEmail()">Verify</button>
+            </div>
+            <div *ngIf="stage==stages[3]" class="d-flex align-items-center justify-content-between w-100">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" (click)="close()">Cancel</button>
+                <button class="btn btn-primary" (click)=" updateEmail()"
+                    [disabled]="countdown<=0||!isValidOTP">Verify</button>
+            </div>
+        </div>
+    </div>
+</section>

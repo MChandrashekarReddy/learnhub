@@ -1,0 +1,27 @@
+<section>
+    <ul *ngIf="assignments.length>0;else noAssignments">
+     <li *ngFor="let assignment of assignments; let i = index" class="card mt-2">
+         <div *ngIf="assignment.content_assignment!==null">
+             <div class="card-title" (click)="openCardBody($event)">
+                 <h6 style="pointer-events: none;">{{i + 1}}. {{assignment.content_name}}</h6>
+                 <i class="fa-solid fa-chevron-down pe-2" style="transform: rotate(-90deg);pointer-events: none;" ></i>         
+             </div>
+             <ul class="card-body" style="display: none;">
+                 <li class="mt-1 card-item">
+                   <a [href]="assignment.content_assignment" target="_blank">{{assignment.content_name}} - Notes</a>
+                     <i class="icon fa-regular fa-circle-down" (click)="onDownload($event,assignment.content_assignment,assignment.content_name+'-assignment')"></i>
+                     <i class="icon fa fa-spinner fa-spin" style="display: none;"></i>
+                     <i class="icon fa-regular fa-circle-check" style="display: none;"></i>
+                 </li>
+             </ul>
+         </div>
+     </li>
+    </ul>
+    <ng-template #noAssignments>
+        <div class="alert alert-info text-center mt-3 alert-message" role="alert">
+            <strong><i class="fa-solid fa-info-circle me-2"></i> No Assignments available for this course.</strong> 
+            <p class="mt-1 mb-0 text-muted">Please check back later for updates.</p>
+        </div>
+    </ng-template>
+ </section>
+ 

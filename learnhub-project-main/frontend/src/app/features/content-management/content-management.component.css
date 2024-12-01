@@ -1,0 +1,92 @@
+
+ .card{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+ }
+ hr{
+    color: black;
+    width: 100%;
+ }
+
+.card-img{
+    height: 60vh;
+    width: 60vw;
+    border-radius: 1em;
+    font-size: 2em;
+}
+ul{
+    list-style: none;
+    width: inherit;
+    height: fit-content;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+ul li a{
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.653);
+    font-weight: bolder;
+}
+ul li a:hover{
+    font-weight: 900;
+    color: black;
+} 
+.card-body{
+    width:inherit;
+    pad: 20px;
+    border: 0.1rem rgba(0, 0, 0, 0.381) solid;
+}
+#videoplayer{
+    width: 100%;
+}
+.video-container{
+    width: inherit;
+}
+video{
+    width: inherit;
+}
+.alert-message{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    font-size: larger;
+}
+
+@media only screen and (max-width: 360px) {
+    ul li a{
+        font-size:0.6rem;
+    }
+}
+@media only screen and (min-width: 361px) and (max-width: 600px) {
+    ul li a{
+        font-size: 0.7rem;
+    }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+    ul li a{
+        font-size: 0.9rem;
+    }
+}
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+    ul li a{
+        font-size: 1rem;
+    }
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+    ul li a{
+        font-size: 1.1rem;
+    }
+}
+
+@media only screen and (min-width: 1441px) {
+    ul li a{
+        font-size: 1.2rem;
+    }
+}

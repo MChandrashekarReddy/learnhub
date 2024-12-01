@@ -1,0 +1,9 @@
+.filter-container:hover .filter-menu{
+    display: block;
+    height: 50vh;
+    z-index: 10001;
+    overflow: scroll;
+}
+.filter-menu::-webkit-scrollbar{
+    display: none;
+}

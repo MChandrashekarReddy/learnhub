@@ -1,0 +1,101 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+section{
+    height: inherit;
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+ul{
+    list-style: none;
+}
+ul li a{
+    text-decoration: none;
+    color: black;
+}
+.fa-circle-chevron-down{
+    transform: rotate(-90deg);
+}
+.card-title{
+    height:10vh;
+    width: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 1%;
+    padding-right: 1%;
+    background-color: rgba(128, 128, 128, 0.21);
+}
+.card{
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: rgba(128, 128, 128, 0.077);
+}
+.card-body{
+    height: fit-content;
+    width: inherit;
+    display: none;
+    flex-direction: column;
+    align-items:center;
+    padding-left: 1%;
+    justify-content: space-around;
+}
+.card-item{
+    height: 7vh;
+    padding: 2%;
+    width: 90%;
+    background-color: rgba(128, 128, 128, 0.116);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.icon{
+    font-size: 1.5em;
+}
+.alert-message{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    font-size: larger;
+}
+@media only screen and (max-width: 600px) {
+    .card{
+        width:90vw;
+        max-width: 500px;
+    }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+    .card{
+        width:90vw;
+        max-width: 500px;
+    }
+}
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+    .card{
+        width:90vw;
+        max-width: 650px;
+    }
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+    .card{
+        width:60vw;
+        max-width:1000px;
+    }
+}
+
+@media only screen and (min-width: 1441px) {
+    .card{
+        width:50vw;
+        max-width:1200px;
+    }
+}

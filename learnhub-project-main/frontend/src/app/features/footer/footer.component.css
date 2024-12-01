@@ -1,0 +1,52 @@
+  footer {
+    background-color: #2C3E50;
+    color: #ECF0F1;
+  }
+
+
+  #about h1 {
+    font-size: xx-large;
+    color: #1ABC9C;
+  }
+
+
+  #contacts h2 {
+    font-size: xx-large;
+    color: #1ABC9C;
+  }
+
+  .contact-details a {
+    margin-left: 0.3rem;
+    color: #3498DB;
+    text-decoration: none;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    padding-bottom: 1rem;
+    padding-bottom: 3vh;
+  }
+  .social-icons .social-icon{
+    color: #ECF0F1;
+    padding: 0.5rem;
+    border-radius: 20%;
+    background-color: rgba(15, 191, 197, 0.089);
+    margin: 1rem;
+  }
+  .fa-facebook-f:hover{
+      color: #1877F2;
+  }
+  .fa-twitter:hover{
+    color: #1DA1F2;
+  }
+  .insta-icon:hover{
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .fa-linkedin-in:hover{
+    color: #0A66C2;
+  }
+  .social-icon:hover{
+    cursor: pointer;
+  }

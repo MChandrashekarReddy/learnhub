@@ -1,0 +1,93 @@
+<section class="modal-dialog modal-dialog-centered " role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Update Mobile Number</h5>
+            <button type="button" class="btn btn-close" data-bs-dismiss="modal" (click)="close()" id="closeUpdatePhoneNumber"></button>
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger m-2 d-flex align-items-center">
+            <span class="me-2">{{ errorMessage }}</span>
+            <button type="button" class="btn-close ms-auto" aria-label="Close" (click)="errorMessage = null"></button>
+        </div>
+        <div class="modal-body">
+
+            <div *ngIf="stage==stages[0]" class="d-flex align-items-center justify-content-center w-100">
+                <h6>Do You Want Update Phone Number?</h6>
+            </div>
+            <div *ngIf="stage==stages[1]" class="d-flex align-items-center justify-content-center w-100 pb-4">
+                <div class="spinner-border" role="status" style="width: 7em; height: 7em;"></div>
+            </div>
+            <div *ngIf="stage==stages[2]"
+                class="d-flex flex-column align-items-center justify-content-center w-100">
+                <form action="" [formGroup]="newPhoneNumberForm" class="w-100 mb-2">
+                    <div class="form-floating">
+                        <input 
+                          type="number" 
+                          class="form-control" 
+                          formControlName="new_phone_number" 
+                          required 
+                          placeholder="New Phone Number"
+                          [ngClass]="{'border-danger':newPhoneNumberForm.get('new_phone_number')?.invalid && newPhoneNumberForm.get('new_phone_number')?.touched,'border-success':newPhoneNumberForm.get('new_phone_number')?.valid}"
+                          id="new_phone_number">
+                        <label for="new_phone_number" class="form-label" [ngClass]="{'text-danger':newPhoneNumberForm.get('new_phone_number')?.invalid && newPhoneNumberForm.get('new_phone_number')?.touched}"
+                        >New Phone Number</label>
+                      </div>
+                    <div *ngIf="newPhoneNumberForm.get('new_phone_number')?.touched && newPhoneNumberForm.get('new_phone_number')?.invalid">
+                        <span class="text-danger" *ngIf="newPhoneNumberForm.get('new_phone_number')?.errors?.['required']">
+                            New Phone Number is required
+                        </span>
+                        <span class="text-danger" *ngIf="newPhoneNumberForm.get('new_phone_number')?.errors?.['pattern'] && !newPhoneNumberForm.get('new_phone_number')?.errors?.['required']">
+                            Invalid New Phone Number
+                        </span>
+                        <span class="text-danger" *ngIf="(newPhoneNumberForm.get('new_phone_number')?.errors?.['minlength'] || newPhoneNumberForm.get('new_phone_number')?.errors?.['maxlength']) && !newPhoneNumberForm.get('new_phone_number')?.errors?.['required'] && !newPhoneNumberForm.get('new_phone_number')?.errors?.['pattern']">
+                            Phone Number must contain exactly 10 digits.
+                        </span>
+                    </div>
+                </form>
+                <small class="mb-2">{{emailResponse}}</small>
+                <div class="d-flex align-items-center justify-content-around w-75 mb-2">
+                    <div class="col-auto">
+                        <input type="text" class="form-control otp-input" maxlength="1"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="otp[0]" (input)="handleInput($event, 0)"
+                            (keydown)="handleKeyDown($event, 0)" id="otp-input-0" autofocus="true" pattern="[0-9]*"/>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" class="form-control otp-input" maxlength="1"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="otp[1]" (input)="handleInput($event, 1)"
+                            (keydown)="handleKeyDown($event, 1)" id="otp-input-1" pattern="[0-9]*"/>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" class="form-control otp-input" maxlength="1"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="otp[2]" (input)="handleInput($event, 2)"
+                            (keydown)="handleKeyDown($event, 2)" id="otp-input-2" pattern="[0-9]*"/>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" class="form-control otp-input" maxlength="1"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="otp[3]" (input)="handleInput($event, 3)"
+                            (keydown)="handleKeyDown($event, 3)" id="otp-input-3" pattern="[0-9]*"/>
+                    </div>
+                </div>
+                <div *ngIf="countdown > 0; else expiredMessage" class="mt-1">
+                    OTP is valid for <span [ngClass]="{'dead-line':(minutes==0&& seconds<10)}"> {{ minutes }}:{{ seconds
+                        < 10 ? '0' : '' }}{{ seconds }}</span> minutes. </div>
+                <ng-template #expiredMessage>
+                    <div class="text-danger">
+                        <p>Don't get the code? <a (click)="sendOTP()" class="text-primary">click to resend</a>
+                        </p>
+                    </div>
+                </ng-template>
+            </div>
+
+        </div>
+        <div class="modal-footer" *ngIf="stage==stages[0]||stages[2]">
+            <div *ngIf="stage==stages[0]" class="d-flex align-items-center justify-content-between w-100">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" (click)="close()">Cancel</button>
+                <button class="btn btn-primary" (click)="sendOTP()">Confirm</button>
+            </div>
+            <div *ngIf="stage==stages[2]" class="d-flex align-items-center justify-content-between w-100">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" (click)="close()">Cancel</button>
+                <button class="btn btn-primary" (click)="submit()" [disabled]="newPhoneNumberForm.invalid&&!isValidOTP()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+</section>

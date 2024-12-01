@@ -1,0 +1,101 @@
+<section class="mt-5 mb-5">
+    <div class="card col-12 col-sm-12 col-md-10 col-lg-8 col-xl-8 col-xxl-8 p-4">
+        <div class="d-flex align-items-center justify-content-between">
+            <h5 class="card-title">Payment Details</h5>
+            <span [ngClass]="{'dead-line':(minutes==0&& seconds<60)}"> {{ minutes }}:{{ seconds< 10 ? '0' : '' }}{{ seconds }}</span>
+        </div>
+        <div class="card-body">
+            <form action="">
+                <div class="mb-3">
+                    <label for="courseName" class="form-label">Course Name</label>
+                    <input type="text" class="form-control" id="courseName" value="{{courseName}}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="amount" class="form-label">Amount</label>
+                    <input type="text" class="form-control" id="amount" value="{{course.course_price}}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="paymentMethod" class="form-label">Payment Method</label>
+                    <select class="form-select" id="paymentMethod" required (change)="selectPaymentOption($event)">
+                        <option value="" disabled selected>Select Payment Method</option>
+                        <option value="CreditCard">Credit Card</option>
+                        <option value="DebitCard">Debit Card</option>
+                        <option value="UPI">UPI</option>
+                        <option value="NetBanking">Net Banking</option>
+                    </select>
+                </div>
+            </form>
+            <form *ngIf="selectedOption==paymentOptions[0]||selectedOption==paymentOptions[1]" [formGroup]="cardForm">
+                <div class="mb-3">
+                    <label for="cardNumber" class="form-label">Card Number</label>
+                    <input type="text" class="form-control" id="cardNumber" formControlName="cardNumber" placeholder="1234 5678 9012 3456" required>
+                    <div *ngIf="cardForm.get('cardNumber')?.invalid && cardForm.get('cardNumber')?.touched" class="text-danger">
+                      <small *ngIf="cardForm.get('cardNumber')?.errors?.['required']">Card Number is required.</small>
+                      <small *ngIf="cardForm.get('cardNumber')?.errors?.['minlength']||cardForm.get('cardNumber')?.errors?.['maxlength']">Card Number must be 16 digits.</small>
+                      <small *ngIf="cardForm.get('cardNumber')?.errors?.['pattern']">Only Digits are allowed</small>
+                    </div>
+                  </div>
+                
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="expiryDate" class="form-label">Expiry Date</label>
+                      <input type="text" class="form-control" id="expiryDate" formControlName="expiryDate" placeholder="MM/YY" required>
+                      <div *ngIf="cardForm.get('expiryDate')?.invalid && cardForm.get('expiryDate')?.touched" class="text-danger">
+                        <small *ngIf="cardForm.get('expiryDate')?.errors?.['required']">Expiry Date is required.</small>
+                        <small *ngIf="cardForm.get('expiryDate')?.errors?.['pattern']">Invalid Format.</small>
+                        <small *ngIf="!cardForm.get('expiryDate')?.errors?.['pattern']&&cardForm.get('expiryDate')?.errors?.['expired']">Card is expired.</small>
+                      </div>
+                    </div>
+                
+                    <div class="col-md-6 mb-3">
+                      <label for="cvv" class="form-label">CVV</label>
+                      <input type="text" class="form-control" id="cvv" formControlName="cvv" placeholder="123" required>
+                      <div *ngIf="cardForm.get('cvv')?.invalid && cardForm.get('cvv')?.touched" class="text-danger">
+                        <small *ngIf="cardForm.get('cvv')?.errors?.['required']">CVV is required.</small>
+                        <small *ngIf="cardForm.get('cvv')?.errors?.['minlength']||cardForm.get('cvv')?.errors?.['maxlength']">CVV must be 3 digits.</small>
+                        <small *ngIf="cardForm.get('cvv')?.errors?.['pattern']">Only Digits are allowed</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="cardholderName" class="form-label">Cardholder Name</label>
+                    <input type="text" class="form-control" id="cardholderName" formControlName="cardholderName" placeholder="John Doe" required>
+                    <div *ngIf="cardForm.get('cardholderName')?.invalid && cardForm.get('cardholderName')?.touched" class="text-danger">
+                      <small *ngIf="cardForm.get('cardholderName')?.errors?.['required']">Cardholder Name is required.</small>
+                      <small *ngIf="cardForm.get('cardholderName')?.errors?.['pattern']">InValid Cardholder Name</small>
+                      <small *ngIf="!cardForm.get('cardholderName')?.errors?.['pattern']&&cardForm.get('cardholderName')?.errors?.['minlength']">Cardholder Name is short</small>
+                      <small *ngIf="!cardForm.get('cardholderName')?.errors?.['pattern']&&cardForm.get('cardholderName')?.errors?.['maxlength']">Cardholder Name is Long</small>
+                    </div>
+                  </div>
+            </form>
+            <form action="" *ngIf="selectedOption==paymentOptions[2]" [formGroup]="upiForm">
+                <div class="mb-3">
+                    <label for="upiId" class="form-label">UPI ID</label>
+                    <input type="text" class="form-control" formControlName="upiid" id="upiId" placeholder="example@upi" required>
+                    <div *ngIf="upiForm.get('upiid')?.invalid && upiForm.get('upiid')?.touched" class="text-danger">
+                        <small *ngIf="upiForm.get('upiid')?.errors?.['required']">UPI Id is required.</small>
+                        <small *ngIf="upiForm.get('upiid')?.errors?.['pattern']">Invalid UPI Id</small>
+                        <small *ngIf="!upiForm.get('upiid')?.errors?.['pattern']&&upiForm.get('upiid')?.errors?.['minlength']">UPI Id is short</small>
+                        <small *ngIf="!upiForm.get('upiid')?.errors?.['pattern']&&upiForm.get('upiid')?.errors?.['maxlength']">UPI Id is Long</small>
+                    </div>
+                </div>
+            </form>
+            <form action="" *ngIf="selectedOption==paymentOptions[3]" [formGroup]="bankForm">
+                <div class="mb-3">
+                    <label for="bank_name" class="form-label">Bank Name</label>
+                    <input type="text" class="form-control" id="bank_name" formControlName="bankName" placeholder="Enter Bank Name" required>
+                    <div *ngIf="bankForm.get('bankName')?.invalid && bankForm.get('bankName')?.touched" class="text-danger">
+                        <small *ngIf="bankForm.get('bankName')?.errors?.['required']">Bank Name is required.</small>
+                        <small *ngIf="bankForm.get('bankName')?.errors?.['pattern']">Invalid Bank Name</small>
+                        <small *ngIf="!bankForm.get('bankName')?.errors?.['pattern']&&bankForm.get('bankName')?.errors?.['minlength']">Bank Name is short</small>
+                        <small *ngIf="!bankForm.get('bankName')?.errors?.['pattern']&&bankForm.get('bankName')?.errors?.['maxlength']">Bank Name is Long</small>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary" (click)="close()" >Cancel</button>
+            <button type="submit" class="btn btn-primary" (click)="pay()" [disabled]="disbaleStatus()">Pay</button>
+        </div>
+    </div>
+</section>

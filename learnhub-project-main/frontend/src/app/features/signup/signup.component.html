@@ -1,0 +1,186 @@
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" *ngIf="!otpGeneration">Sign Up</h3>
+            <h3 class="modal-title" id="otpModalLabel" *ngIf="otpGeneration">Enter OTP</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger m-3 d-flex align-items-center">
+            <span class="me-2">{{ errorMessage }}</span>
+            <button type="button" class="btn-close ms-auto" aria-label="Close" (click)="errorMessage = null"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="signupForm" action="" (ngSubmit)="signupSubmit()" *ngIf="!otpGeneration">
+                <div class="form-group mb-3">
+                    <label *ngIf="signupForm.get('img')?.untouched || signupForm.get('img')?.valid" for="img"
+                        class="form-label">Profile Img</label>
+                    <input type="file" class="form-control" formControlName="img" id="img" placeholder="Content Doc"
+                        [ngClass]="{'border-danger': signupForm.get('img')?.invalid&&signupForm.get('img')?.touched,'border-success':signupForm.get('img')?.valid}">
+                    <div *ngIf="signupForm.get('img')?.touched && signupForm.get('img')?.invalid"
+                        class="error-message danger">
+                        <span class="text-danger" *ngIf="signupForm.get('img')?.errors?.['pattern']">Invalid
+                            Img Format</span>
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" formControlName="name" id="name" placeholder="name"
+                        [ngClass]="{'border-danger':signupForm.get('name')?.invalid && signupForm.get('name')?.touched,'border-success':signupForm.get('name')?.valid}"
+                        autofocus>
+                    <label for="name" class="form-label"
+                        [ngClass]="{'text-danger':signupForm.get('name')?.invalid && signupForm.get('name')?.touched}">Name</label>
+                    <div class="error-message"
+                        *ngIf="signupForm.get('name')?.touched && signupForm.get('name')?.invalid">
+                        <span *ngIf="signupForm.get('name')?.errors?.['required']" class="text-danger">Name is
+                            required</span>
+                        <span *ngIf="signupForm.get('name')?.errors?.['minlength']" class="text-danger">Name must be at
+                            least 3 characters long.</span>
+                        <span *ngIf="signupForm.get('name')?.errors?.['maxlength']" class="text-danger">Name cannot be
+                            more than 100 characters long</span>
+                        <span *ngIf="signupForm.get('name')?.errors?.['pattern']" class="text-danger">Invalid
+                            Name</span>
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" formControlName="email" id="email" placeholder="email"
+                        [ngClass]="{'border-danger':signupForm.get('email')?.invalid && signupForm.get('email')?.touched,'border-success':signupForm.get('email')?.valid}">
+                    <label for="email" class="form-label"
+                        [ngClass]="{'text-danger':signupForm.get('email')?.invalid && signupForm.get('email')?.touched}">Email</label>
+                    <div class="error-message"
+                        *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid">
+                        <span class="text-danger" *ngIf="signupForm.get('email')?.errors?.['required']">Email is
+                            required</span>
+                        <span class="text-danger"
+                            *ngIf="signupForm.get('email')?.errors?.['email']||signupForm.get('email')?.errors?.['pattern']">Invalid
+                            Email</span>
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" formControlName="phonenumber" id="phonenumber"
+                        placeholder="phonenumber"
+                        [ngClass]="{'border-danger':signupForm.get('phonenumber')?.invalid && signupForm.get('phonenumber')?.touched,'border-success':signupForm.get('phonenumber')?.valid}">
+                    <label for="phonenumber" class="form-label"
+                        [ngClass]="{'text-danger':signupForm.get('phonenumber')?.invalid && signupForm.get('phonenumber')?.touched}">Phone
+                        Number</label>
+                    <div class="error-message"
+                        *ngIf="signupForm.get('phonenumber')?.touched && signupForm.get('phonenumber')?.invalid">
+                        <span class="text-danger" *ngIf="signupForm.get('phonenumber')?.errors?.['required']">Phone
+                            Number is required</span>
+                        <span class="text-danger" *ngIf="signupForm.get('phonenumber')?.errors?.['pattern']">Invalid
+                            Phone Number</span>
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input [type]="passWordField" class="form-control" formControlName="password" id="password"
+                        placeholder="password"
+                        [ngClass]="{'border-danger':signupForm.get('password')?.invalid && signupForm.get('password')?.touched,'border-success':signupForm.get('password')?.valid}"
+                        [(ngModel)]="password">
+                    <label for="password" class="form-label"
+                        [ngClass]="{'text-danger':signupForm.get('password')?.invalid && signupForm.get('password')?.touched}">Password</label>
+                    <span id="icon" (click)="passwordVisibility($event)" class="password-toggle"><i
+                            [class]="passwordIcon"
+                            [ngClass]="{'pb-5':signupForm.get('password')?.invalid&&signupForm.get('password')?.touched&&signupForm.get('password')?.errors?.['pattern'],'pb-4':signupForm.get('password')?.errors?.['required']&&signupForm.get('password')?.touched && signupForm.get('password')?.invalid}"></i></span>
+                    <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid"
+                        class="error-message danger">
+                        <span class="text-danger" *ngIf="signupForm.get('password')?.errors?.['required']">Password is
+                            required</span>
+                        <span class="text-danger" *ngIf="signupForm.get('password')?.errors?.['minlength']">Password
+                            must be at least 8 characters long </span>
+                        <span class="text-danger" *ngIf="signupForm.get('password')?.errors?.['maxlength']">Password
+                            cannot exceed 16 characters </span>
+                        <span class="text-danger" *ngIf="signupForm.get('password')?.errors?.['pattern']">Password must
+                            include uppercase, lowercase, number, and special character</span>
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input [type]="confirmpassWordField" class="form-control" formControlName="confirmpassword"
+                        id="confirmpassword" placeholder="confirmpassword"
+                        [ngClass]="{'border-danger':signupForm.get('confirmpassword')?.touched&&(!isMatching() || signupForm.get('confirmpassword')?.invalid),'border-success':signupForm.get('confirmpassword')?.valid && isMatching()}"
+                        [(ngModel)]="confirmpassword">
+                    <label for="confirmpassword" class="form-label"
+                        [ngClass]="{'text-danger':signupForm.get('confirmpassword')?.touched&&(!isMatching() || signupForm.get('confirmpassword')?.invalid)}">Confirm
+                        Password</label>
+                    <span id="icon" (click)="confirmpasswordVisibility($event)" class="password-toggle"><i
+                            [class]="confirmpasswordIcon"
+                            [ngClass]="{'pb-4':signupForm.get('confirmpassword')?.touched&&(!isMatching() || signupForm.get('confirmpassword')?.invalid)}"></i></span>
+                    <div class="error-message" *ngIf="signupForm.get('confirmpassword')?.touched">
+                        <span class="text-danger"
+                            *ngIf="signupForm.get('confirmpassword')?.errors?.['required']&&isMatching()">Confirm
+                            Password is required</span>
+                        <span class="text-danger" *ngIf="!isMatching()">Passwords must match</span>
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" formControlName="address" id="address" placeholder="address"
+                        [ngClass]="{'border-danger':signupForm.get('address')?.invalid && signupForm.get('address')?.touched,'border-success':signupForm.get('address')?.valid}">
+                    <label for="address" class="form-label"
+                        [ngClass]="{'text-danger':signupForm.get('address')?.invalid && signupForm.get('address')?.touched}">Address</label>
+                    <div class="error-message" *ngIf="signupForm.get('')?.touched && signupForm.get('')?.invalid">
+                        <span>Address required</span>
+                    </div>
+                </div>
+                <div class="mb-3 d-flex justify-content-around align-items-center">
+                    <div>
+                        <input type="radio" class="me-2" id="instructor" formControlName="role" value="instructor">
+                        <label for="instructor">Instructor</label>
+                    </div>
+                    <div>
+                        <input type="radio" class="me-2" id="student" formControlName="role" value="student">
+                        <label for="student">Student</label>
+                    </div>
+                    <div class="error-message" *ngIf="signupForm.get('')?.touched && signupForm.get('')?.invalid">
+                        <span></span>
+
+                    </div>
+                </div>
+                <div id="signupButton">
+                    <button type="submit" class="btn btn-primary w-100"
+                        [disabled]="signupForm.invalid||!isMatching()||errorMessage!=null">Sign Up</button>
+                </div>
+            </form>
+            <!-- <div class="d-flex justify-content-center"  *ngIf="progress&&!otpGeneration">
+                <div class="spinner-border" role="status" style="width: 7em; height: 7em;">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+            </div> -->
+            <div *ngIf="otpGeneration">
+                <form id="otpForm" class="d-flex flex-column align-items-center">
+                    <img src="../../../assets/sent-mail.png" alt="" class="email-sent-img">
+                    <p>Please check your Email</p>
+                    <small class="mb-2">We have sent code to <span class="text-primary">{{email}}</span></small>
+                    <div class="row g-3 justify-content-center mb-3">
+                      <div class="col-auto">
+                        <input type="text" class="form-control otp-input" maxlength="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="otp[0]"
+                               (input)="handleInput($event, 0)" (keydown)="handleKeyDown($event, 0)" id="otp-input-0" autofocus="true" />
+                      </div>
+                      <div class="col-auto">
+                        <input type="text" class="form-control otp-input" maxlength="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="otp[1]"
+                               (input)="handleInput($event, 1)" (keydown)="handleKeyDown($event, 1)" id="otp-input-1" />
+                      </div>
+                      <div class="col-auto">
+                        <input type="text" class="form-control otp-input" maxlength="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="otp[2]"
+                               (input)="handleInput($event, 2)" (keydown)="handleKeyDown($event, 2)" id="otp-input-2" />
+                      </div>
+                      <div class="col-auto">
+                        <input type="text" class="form-control otp-input" maxlength="1" [ngModelOptions]="{standalone: true}" [(ngModel)]="otp[3]"
+                               (input)="handleInput($event, 3)" (keydown)="handleKeyDown($event, 3)" id="otp-input-3" />
+                      </div>
+                    </div>
+                    <div *ngIf="countdown > 0; else expiredMessage">
+                        OTP is valid for {{ minutes }}:{{ seconds < 10 ? '0' : '' }}{{ seconds }} minutes.
+                      </div>
+                      <ng-template #expiredMessage>
+                        <div class="text-danger"><p>Don't get the code? <a (click)="signupSubmit()" class="text-primary">click to resend</a></p></div>
+                      </ng-template>
+                    <div class="d-flex align-items-center justify-content-around w-100">
+                    <button type="button" class="btn btn-secondary" (click)="backToSignIn()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="countdown<=0||otp.join('').length<4"(click)="verifyOTP()">Verify OTP</button>
+                    </div>
+                  </form>                  
+            </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-center align-items-center">
+            <span>Already on LearnHub? <a href="" (click)="openLoginModal($event)">Log in</a></span>
+            
+        </div>
+    </div>
+</div>

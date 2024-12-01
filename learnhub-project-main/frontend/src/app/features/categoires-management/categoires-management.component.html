@@ -1,0 +1,91 @@
+<div class="container-fluid mt-4">
+  <div *ngIf="categoriesDetailsList.length > 0" class="card">
+    <div class="card-header">
+      <h2 class="text-center">Categories</h2>
+    </div>
+    <div class="d-flex flex-column flex-sm-row justify-content-around align-items-center mt-3 edit-section">
+      <div class="mb-3 mb-md-0">
+        <!-- <label for="sortOptions">Sort By:</label> -->
+        <select id="sortOptions" (change)="sortBy($event)" class="form-select">
+          <option class="options" value="category_name">Category</option>
+          <option class="options" value="courses">Courses</option>
+          <option class="options" value="revenue">Revenue</option>
+          <option class="options" value="enrollments">Enrollments</option>
+          <option class="options" value="category_created_at">Date</option>
+        </select>
+      </div>
+      <div class="mb-3 mb-md-0">
+        <div class="input-group">
+          <!-- <span class="input-group-text">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span> -->
+          <input type="text" [(ngModel)]="searchCategory" (input)="onSearchChange()" placeholder="Search by name..."
+            class="form-control" />
+        </div>
+      </div>
+      <div class="filter-container dropdown">
+        <button class="btn bg-btn dropdown-toggle w-100 w-md-auto" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          Filter
+        </button>
+        <ul class="dropdown-menu filter-menu p-3" aria-labelledby="filterDropdown">
+          
+          <h6>Dates</h6>
+          <div *ngFor="let date of datesRange" class="filter-list">
+            <input type="checkbox" [value]="date" (change)="filterSelection($event, 'dates')" class="form-check-input me-1" id="date-{{date}}">
+            <label class="form-check-label" for="date-{{date}}">{{ date }}</label>
+          </div>
+          <hr>
+          <h6>Enrollments</h6>
+          <div *ngFor="let enrollment of enrollmentsRange" class="filter-list">
+            <input type="checkbox" [value]="enrollment" (change)="filterSelection($event, 'enrollments')" class="form-check-input me-1" id="enrollment-{{enrollment}}">
+            <label class="form-check-label" for="enrollment-{{enrollment}}">{{ enrollment }}</label>
+          </div>
+          <hr>
+          <h6>Courses</h6>
+          <div *ngFor="let course of courseRange" class="filter-list">
+            <input type="checkbox" [value]="course" (change)="filterSelection($event, 'courses')" class="form-check-input me-1" id="course-{{course}}">
+            <label class="form-check-label" for="course-{{course}}">{{ course }}</label>
+          </div>
+          <hr>
+          <h6>Revenue</h6>
+          <div *ngFor="let revenue of revenueRange" class="filter-list">
+            <input type="checkbox" [value]="revenue" (change)="filterSelection($event, 'revenue')" class="form-check-input me-1" id="revenue-{{revenue}}">
+            <label class="form-check-label" for="revenue-{{revenue}}">{{ revenue }}</label>
+          </div>
+        </ul>
+      </div>
+    </div>
+    <div class="card-body table-responsive">
+      <table class="table table-hover table-bordered ">
+        <thead class="thead-dark bg-thead">
+          <tr>
+            <th>Category Name</th>
+            <th>No Of Courses</th>
+            <th>No of Enrollments</th>
+            <th>Amount</th>
+            <th>Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of displayCategoriesDetailsList">
+            <td>{{ category.category_name | titlecase}}</td>
+            <td>{{ category.courses }}</td>
+            <td>{{ category.enrollments }}</td>
+            <td>{{ category.revenue | currency:"INR" }}</td>
+            <td>{{ category.category_created_at | date:'medium' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<mat-paginator [length]="filteredCategoriesDetailsList.length"
+                       [pageSize]="pageSize"
+                       [pageIndex]="pageIndex"
+                       [hidePageSize]="true"
+                       (page)="onPageChange($event)"
+                       class="btn-page">
+        </mat-paginator>
+<div *ngIf="filteredCategoriesDetailsList.length == 0" class="alert alert-danger text-center mt-4">
+  <p>No Categories details found.</p>
+</div>

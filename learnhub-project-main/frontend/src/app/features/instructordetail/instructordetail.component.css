@@ -1,0 +1,12 @@
+
+
+  .card-img-top{
+    height: 30vh;
+  }
+  .course-text {
+    height: 15vh;
+    overflow-y: scroll;
+  }
+  .course-text::-webkit-scrollbar {
+    display: none;
+  }

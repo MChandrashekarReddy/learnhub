@@ -1,0 +1,53 @@
+<section>
+    <ng-container *ngIf="myNotifications.length != 0; else noNotifications">
+      <div class="col-11 col-md-10 col-lg-6  mb-4  d-flex flex-row align-items-center justify-content-between ">
+        <button class="btn btn-primary mark-read-button" (click)="markAllAsRead()">
+            <i class="fas fa-check-circle me-1"></i> Mark All As Read
+        </button>
+        <button class="btn btn-danger clear-chat-button ms-2" (click)="clearNotifcations()">
+            <i class="fas fa-trash-alt me-1"></i> Clear Chat
+        </button>
+        
+      </div>
+  
+      <div class="col-11 col-md-10 col-lg-6 card mb-4 shadow-sm rounded" *ngFor="let notification of myNotifications" (click)="read(notification)"
+          [ngClass]="{
+              'un-read-message': !notification.notification_read_status,
+              'read-message': notification.notification_read_status
+          }"
+      >
+        <div class="card-header d-flex align-items-center justify-content-between p-4">
+          <h5 class="card-title mb-0" [ngClass]="{
+              'un-read-message': !notification.notification_read_status,
+              'read-message': notification.notification_read_status
+          }">{{ notification.notification_title }}</h5>
+          <div class="d-flex align-items-center">
+            <p class="card-subtitle mb-0">
+              {{ notification.created_at | date: 'short' }}
+            </p>
+            <div class="dropdown">
+              <i class="fa-solid fa-ellipsis-vertical ms-3" data-bs-toggle="dropdown"></i>
+              <ul class="dropdown-menu">
+                <li class="dropdown-item" (click)="markAsRead($event, notification)">Mark As Read</li>
+                <li class="dropdown-item" (click)="deleteNotification($event, notification)">Delete</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="selectedNotification == notification.notification_id">
+          <p class="card-text text-muted">{{ notification.notification_message }}</p>
+        </div>
+      </div>
+    </ng-container>
+  
+    <ng-template #noNotifications>
+      <div class="col-11 col-md-10 col-lg-6 card mb-4 shadow-sm rounded text-center py-5">
+        <div class="card-body">
+          <i class="fa-solid fa-bell-slash fa-3x text-muted mb-3"></i>
+          <h5 class="text-muted">No Notifications</h5>
+          <p class="text-muted">You're all caught up! Check back later for any updates.</p>
+        </div>
+      </div>
+    </ng-template>
+  </section>
+  

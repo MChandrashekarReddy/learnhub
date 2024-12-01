@@ -1,0 +1,34 @@
+<!-- <h1>hii</h1>
+<div class="modal fade" id="categoryadd"> -->
+<div class="modal-dialog modal-dialog-centered" #modal>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title">Category Setup</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger m-3 d-flex align-items-center">
+            <span class="me-2">{{ errorMessage }}</span>
+            <button type="button" class="btn-close ms-auto" aria-label="Close" (click)="errorMessage = null"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="categoryForm" (ngSubmit)="addCategory()">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" formControlName="category" id="category" placeholder="category" [(ngModel)]="newCategory"
+                        [ngClass]="{'border-danger':(categoryForm.get('category')?.invalid&&categoryForm.get('category')?.touched)||checkCategoryExists(),'border-success':categoryForm.get('category')?.valid&&!checkCategoryExists()}">
+                    <label for="category" class="form-label"
+                        [ngClass]="{'text-danger': (categoryForm.get('category')?.invalid&&categoryForm.get('category')?.touched)||checkCategoryExists()}">category</label>
+                    <div *ngIf="(categoryForm.get('category')?.touched && categoryForm.get('category')?.invalid)||checkCategoryExists()"
+                        class="error-message danger">
+                        <span class="text-danger" *ngIf="categoryForm.get('category')?.errors?.['required']">category is
+                            required</span>
+                        <span class="text-danger" *ngIf="categoryForm.get('category')?.errors?.['category']">Invalid category</span>
+                        <span class="text-danger" *ngIf="checkCategoryExists()">Duplicate category</span>
+                    </div>
+                </div>
+                <div id="addButton">
+                    <button type="submit" class="btn btn-primary w-100" [disabled]="categoryForm.invalid||checkCategoryExists()">ADD</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

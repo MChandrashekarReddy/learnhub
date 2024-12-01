@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-sm navbar-dark" id="nav-conatiner">
+  <a href="" class="navbar-brand ms-3">Learn Hub</a>
+  <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="menu">
+    <ul class="navbar-nav ms-auto me-3">
+      <li class="nav-item">
+        <a (click)="scrollToFooter('main-container')" class="nav-link active me-2">Home</a>
+      </li>
+      <li class="nav-item">
+        <a (click)="scrollToFooter('courses')" class="nav-link me-2">Courses</a>
+      </li>
+      <li class="nav-item">
+        <a (click)="scrollToFooter('about')" class="nav-link me-2">About Us</a>
+      </li>
+      <li class="nav-item">
+        <a (click)="scrollToFooter('contacts')" class="nav-link me-2">Contact Us</a>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-dark" id="buttons">
+          <a  class="nav-link login" data-bs-toggle="modal" data-bs-target="#loginModal" (click)="onclick()">Login</a>
+          <a  class="nav-link login" data-bs-toggle="modal" data-bs-target="#signupModal" (click)="onclick()">SignUp</a>
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
+<app-login class="modal fade" id="loginModal" ></app-login>
+<app-signup class="modal fade" id="signupModal" ></app-signup>
+<app-forgot-password  class="modal fade" id="forgotPasswordModal"></app-forgot-password>

@@ -1,0 +1,100 @@
+<section class="d-flex align-items-center justify-content-center profile-container mt-4 mb-4  ">
+    <div class="card col-12 col-sm-12 col-md-10 col-lg-8 col-xl-8 col-xxl-8 p-4">
+        <div class="mb-3 d-flex flex-column align-items-center justify-content-between">
+            <div class="circular-frame mb-1">
+                <img [src]="profileForm.get('user_img')?.value" alt="" class="">
+            </div>
+            <div class="error-message mb-2" *ngIf="profileForm.get('user_img')?.invalid">
+                <span *ngIf="profileForm.get('user_img')?.errors?.['pattern']" class="text-danger">Please upload an
+                    image file (jpg, jpeg, png, or gif).</span>
+            </div>
+            <!-- <img [src]="profileForm.get('user_img')?.value" alt="" class="img-fluid rounded mb-2"
+                style="max-width: 100%; height: auto;"> -->
+            <div class="d-flex align-items-center justify-content-around w-50">
+                <button type="button" class="btn btn-sm btn-outline-primary me-1" (click)="triggerFileInput()"
+                    [disabled]="mode=='Edit'">
+                    <i class="fa-regular fa-pen-to-square"></i> {{imageStatus}}
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary ms-1" (click)="removeImg()"
+                    [disabled]="mode == 'Edit'" [hidden]="imageStatus=='Add Image'">
+                    <i class="fa-solid fa-xmark"></i> Remove Image
+                </button>
+            </div>
+        </div>
+        <form [formGroup]="profileForm" (ngSubmit)="update($event)">
+            <div class="form-group mb-3">
+                <label for="user_name" class="form-label"
+                    [ngClass]="{'text-danger':profileForm.get('user_name')?.invalid && profileForm.get('user_name')?.touched}">Name:</label>
+                <input type="text" class="form-control" formControlName="user_name" id="user_name"
+                    placeholder="Enter New Name"
+                    [ngClass]="{'border-danger':profileForm.get('user_name')?.invalid && profileForm.get('user_name')?.touched,'border-success':profileForm.get('user_name')?.valid}"
+                    autofocus [readOnly]="mode=='Edit'">
+
+                <div class="error-message"
+                    *ngIf="profileForm.get('user_name')?.touched && profileForm.get('user_name')?.invalid">
+                    <span *ngIf="profileForm.get('user_name')?.errors?.['required']" class="text-danger">Name is
+                        required</span>
+                    <span *ngIf="profileForm.get('user_name')?.errors?.['minlength']" class="text-danger">Name must be
+                        at
+                        least 3 characters long.</span>
+                    <span *ngIf="profileForm.get('user_name')?.errors?.['maxlength']" class="text-danger">Name cannot be
+                        more than 100 characters long</span>
+                    <span *ngIf="profileForm.get('user_name')?.errors?.['pattern']" class="text-danger">Invalid
+                        Name</span>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="user_address" class="form-label"
+                    [ngClass]="{'text-danger': profileForm.get('user_address')?.invalid && profileForm.get('user_address')?.touched}">Address:</label>
+                <input type="text" class="form-control" formControlName="user_address" id="user_address"
+                    placeholder="Address"
+                    [ngClass]="{'border-danger': profileForm.get('user_address')?.invalid && profileForm.get('user_address')?.touched, 'border-success': profileForm.get('user_address')?.valid}"
+                    [readOnly]="mode=='Edit'">
+                <div class="error-message"
+                    *ngIf="profileForm.get('user_address')?.touched && profileForm.get('user_address')?.invalid">
+                    <span class="text-danger">Address required</span>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+
+            </div>
+            <div class="form-group mb-3">
+                <label for="user_email" class="form-label">Email:</label>
+                <div class="d-flex align-items-center justify-content-center">
+                    <input type="text" id="user_email" [value]="userProfile?.user_email" class="form-control" readonly>
+                    <button type="button" class="btn btn-primary ms-1" style="height: 7vh;" data-bs-toggle="modal"
+                        data-bs-target="#UpdateEmail" data-bs-dismiss="modal">Update</button>
+                </div>
+                
+            </div>
+            <div class="form-group mb-3">
+                <label for="user_phone_number" class="form-label">Phone Number:</label>
+                <div class="d-flex align-items-center justify-content-center">
+                    <input type="text" id="user_phone_number" [value]="userProfile?.user_phone_number" class="form-control"
+                    readonly>                    
+                    <button type="button" class="btn btn-primary ms-1" style="height: 7vh;" data-bs-toggle="modal"
+                        data-bs-target="#updatePhoneNumber" data-bs-dismiss="modal" >Update</button>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="user_role" class="form-label">Role:</label>
+                <input type="text" id="user_role" [value]="userProfile?.user_role" class="form-control" readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="user_created_at" class="form-label">Created At:</label>
+                <input type="text" id="user_created_at" [value]="userProfile?.user_created_at|date:'medium'"
+                    class="form-control" readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="user_updated_at" class="form-label">Updated At:</label>
+                <input type="text" id="user_updated_at" [value]="userProfile?.user_updated_at|date:'medium'"
+                    class="form-control" readonly>
+            </div>
+            <div [ngClass]="{'muliple-btn-box':isChanged(),'single-btn-box':!isChanged()}">
+                <button type="button" class="btn btn-secondary" *ngIf="isChanged()" (click)="resetForm()">Reset</button>
+                <button type="submit" class="btn btn-primary edit-btn"
+                    [disabled]="profileForm.invalid&&mode=='Save'">{{mode}}</button>
+            </div>
+        </form>
+    </div>
+</section>

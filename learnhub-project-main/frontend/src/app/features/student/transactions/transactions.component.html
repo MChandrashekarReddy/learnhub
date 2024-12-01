@@ -1,0 +1,74 @@
+<section>
+  <div class="container mt-5 shadow-lg p-4 rounded border bg-light">
+    <h2 class="text-center mb-4 font-weight-bold" *ngIf="isMyTransactionsAvailable">My Transactions</h2>
+
+    <div *ngIf="!isMyTransactionsAvailable" class="alert alert-info text-center p-5 rounded-lg">
+      <h4 class="alert-heading mb-3 text-dark font-weight-bold d-flex align-items-center justify-content-center">
+        <i class="fas fa-exclamation-circle me-2 text-primary" style="font-size: 1.5em;"></i>No Transactions Found
+      </h4>
+      <p class="mb-4 text-muted">It seems like you haven't made any transactions yet. You can start exploring the available courses below.</p>
+      <a class="btn btn-primary mt-3" [routerLink]="['../']">Explore Courses</a>
+    </div>
+    <div *ngIf="isMyTransactionsAvailable">
+      <div class="filter-section mb-2">
+        <div class="filter-section-item">
+          <i class="fa-solid fa-filter me-3"></i>
+          <select id="paymentMethod" class="form-control" [(ngModel)]="filterPaymentMode">
+            <option value="">All</option>
+            <option *ngFor="let option of paymentOptions" [value]="option">{{option}}</option>
+          </select>
+        </div>
+      
+        <div class="filter-section-item">
+          <i class="fas fa-calendar-alt me-3"></i>
+          <input type="date" id="startDate" class="form-control" placeholder="Start Date" [(ngModel)]="startDate" (change)="dataValidation()">
+        </div>
+      
+        <div class="filter-section-item">
+          <i class="fas fa-calendar-alt me-3"></i>
+          <input type="date" id="endDate" class="form-control" placeholder="End Date" [(ngModel)]="endDate" (change)="dataValidation()">
+        </div>
+      
+        <div class="filter-section-item">
+          <button type="button" class="btn bg-thead text-white me-3" (click)="filterTransactions()">
+            <i class="fas fa-check"></i> Apply Filter
+          </button>
+          <button type="reset" class="btn btn-secondary" (click)="reset()">
+            <i class="fas fa-refresh"></i> Reset
+          </button>
+        </div>
+      </div>
+      <div *ngIf="myTransactions.length === 0" class="alert alert-info text-center p-5 rounded-lg">
+        <h4 class="alert-heading mb-3 text-dark font-weight-bold d-flex align-items-center justify-content-center">
+          <i class="fas fa-info-circle me-2 text-primary" style="font-size: 1.5em;"></i>No Results Found
+        </h4>
+        <p class="mb-4 text-muted">We couldn't find any transactions matching your filters. Please adjust your filter criteria and try again.</p>
+      </div>
+      <div class="transaction-table"*ngIf="myTransactions.length">
+        <div class="table-responsive rounded border">
+          <table class="table table-hover table-striped table-bordered">
+            <thead class="text-white bg-thead">
+              <tr>
+                <th class="text-center">Payment ID</th>
+                <th class="text-center">Course Name</th>
+                <th class="text-center" style="cursor: pointer;" (click)="sortBy('price')">Price <i class="fa-solid fa-sort"></i></th>
+                <th class="text-center" style="cursor: pointer;" (click)="sortBy('payment_mode')">Payment Mode <i class="fa-solid fa-sort"></i></th>
+                <th class="text-center" style="cursor: pointer;" (click)="sortBy('payment_at')">Payment Date <i class="fa-solid fa-sort"></i></th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr *ngFor="let transaction of myTransactions">
+                <td class="text-center">{{transaction.payment_id}}</td>
+                <td class="text-center">{{transaction.course_name | titlecase}}</td>
+                <td class="text-center">{{transaction.price | currency:'INR'}}</td>
+                <td class="text-center">{{transaction.payment_mode}}</td>
+                <td class="text-center">{{transaction.payment_at | date:'medium'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

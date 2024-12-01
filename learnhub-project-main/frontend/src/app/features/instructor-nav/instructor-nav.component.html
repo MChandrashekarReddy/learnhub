@@ -1,0 +1,99 @@
+<nav class="navbar navbar-expand-sm navbar-dark" id="nav-conatiner">
+    <a [routerLink]="['home']" class="navbar-brand ms-3">Learn Hub</a>
+    <button class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#offcanvasForSmallDevises"
+        aria-controls="offcanvasForSmallDevises">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" *ngIf="!isSmallScreen">
+        <ul class="navbar-nav ms-auto me-3">
+            <li class="nav-item">
+                <a class="nav-link me-2" data-bs-toggle="modal" data-bs-target="#courseadd">Add Course</a>
+            </li>
+            <li class="nav-item me-4">
+                <a class="nav-link position-relative" routerLinkActive="active" [routerLink]="['notifications']">
+                    <i class="fa-regular fa-bell"></i>
+                    <span *ngIf="notificationCount > 0" class="badge rounded-pill  bg-thead notification-badge">
+                      {{ notificationCount }}
+                    </span>
+                  </a>
+            </li>
+            <li class="nav-item dropdown dropdown-users">
+                <div class="profile-circle" id="profile-initial">
+                    <img class="profile-circle" [src]="img" alt="AD" />
+                </div>
+                <ul class="dropdown-menu dropdown-menu-start dropdown-menu-profile" aria-labelledby="profileDropdown">
+                    <div class="profile-dropdown"[routerLink]="['profile']">
+                        <img class="profile-circle me-3 ms-3" [src]="img" alt="AD" />
+                        <h6 class="text-align-justify">{{userName|titlecase}}</h6>
+                    </div>
+                
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" routerLinkActive="active" [routerLink]="['profile']">My Pofile</a></li>
+                    <li><a class="dropdown-item d-flex align-items-center justify-content-between"  routerLinkActive="active" [routerLink]="['notifications']">Notifications <small *ngIf="notificationCount > 0" class="badge rounded-pill bg-thead">
+                        {{ notificationCount }}
+                      </small></a> </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#courseadd">Add Course</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#UpdateEmail">Update Email</a></li>
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updatePhoneNumber">Update PhoneNumber</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li (click)="logout()">
+                        <a class="dropdown-item d-flex align-items-center justify-content-between" >Logout <i class="fa-solid fa-arrow-right-from-bracket pe-3"></i></a>
+                      </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div *ngIf="isSmallScreen" data-bs-backdrop="false" data-bs-scroll="true" class="offcanvas offcanvas-end"
+        tabindex="-1" id="offcanvasForSmallDevises" aria-labelledby="offcanvasForSmallDevises">
+        <div class="offcanvas-header">
+            <h3 class="offcanvas-title" id="offcanvasForSmallDevises">Welcome</h3>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" data-bs-dismiss="offcanvas">
+            <div class="profile-dropdown" [routerLink]="['profile']">
+                <img class="profile-circle me-3 ms-3" [src]="img" alt="AD" />
+                <h6 class="text-align-justify">{{userName}}</h6>
+            </div>
+            
+            <ul class="list-unstyled mt-3">
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item"routerLinkActive="active" [routerLink]="['profile']">My Pofile</a></li>
+                <li><a class="dropdown-item d-flex align-items-center justify-content-between"  routerLinkActive="active" [routerLink]="['notifications']">Notifications <small *ngIf="notificationCount > 0" class="badge rounded-pill bg-thead">
+                    {{ notificationCount }}
+                  </small></a> </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#courseadd">Add Course</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#UpdateEmail">Update Email</a></li>
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updatePhoneNumber">Update PhoneNumber</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li (click)="logout()" class="d-flex align-items-center justify-content-between"><a class="dropdown-item">Logout</a><i class="fa-solid fa-arrow-right-from-bracket pe-3"></i></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<app-add-course class="modal fade" data-bs-backdrop="static"  id="courseadd"></app-add-course>
+<app-updateemail  class="modal fade" data-bs-backdrop="static"  id="UpdateEmail"></app-updateemail>
+<app-update-phonenumber class="modal fade" data-bs-backdrop="static" id ="updatePhoneNumber"></app-update-phonenumber>

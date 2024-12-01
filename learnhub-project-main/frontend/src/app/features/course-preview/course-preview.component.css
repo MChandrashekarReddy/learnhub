@@ -1,0 +1,196 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+section{
+    height: inherit;
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border: 0.01rem black solid;
+    padding:1% 1%;
+    margin: 1% 1%;
+}
+.course-review,.course-content{
+    width:99%;
+    padding: 1%1%;
+    border: 0.01rem black solid;
+    margin-top: 1%;
+}
+.alert-message{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    font-size: larger;
+}
+.feedback{
+    width: inherit;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.img-conatiner{
+    height:fit-content;
+}
+.progress-bar{
+    background-color:#FFDF00;
+}
+.progress{
+    margin-top: 1%;
+}
+
+.profile-circle {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 100%;
+    background-color:rgba(38, 106, 148, 0.295); 
+    color: rgba(255, 255, 255, 0.664);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+    text-transform: uppercase; 
+  }
+  .profile-circle:hover{
+    background-color:rgba(38, 106, 148, 0.788); 
+    color: rgb(255, 255, 255);
+  }
+  .profile{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .review-profile{
+    display: flex;
+    align-items:center;
+    justify-content: flex-start;
+  }
+  .review-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1%;
+  }
+  ul li{
+    list-style: none;
+    padding: 1%;
+    border: rgba(0, 0, 0, 0.159) solid 0.01rem;
+  }
+  .star{
+    font-size: 2rem;
+  }
+
+ul{
+    list-style: none;
+}
+ul li a{
+    text-decoration: none;
+    color: black;
+}
+.fa-circle-chevron-down{
+    transform: rotate(-90deg);
+}
+.card-title{
+    height:10vh;
+    width: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 1%;
+    padding-right: 1%;
+    background-color: rgba(128, 128, 128, 0.21);
+}
+.card{
+    height: fit-content;
+    display: flex;
+    width:inherit;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: rgba(128, 128, 128, 0.077);
+}
+.card-body{
+    height: fit-content;
+    width: inherit;
+    display: none;
+    flex-direction: column;
+    align-items:center;
+    padding-left: 1%;
+    justify-content: space-around;
+}
+.card-item{
+    height: 7vh;
+    padding: 2%;
+    width: 90%;
+    background-color: rgba(128, 128, 128, 0.116);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.icon{
+    font-size: 1.5em;
+}
+.non-interactive {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: default;     
+  }
+@media only screen and (max-width: 600px) {
+    .progress{
+        width: 20vw;
+    }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+    .progress{
+        width: 25vw;
+    }
+}
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+    .progress{
+        width:30vw;
+    }
+}
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+    .progress{
+        width: 40vw;
+    }
+}
+
+@media only screen and (min-width: 1441px) {
+    .progress{
+        width: 50vw;
+    }
+}
+
+.modal-dialog {
+    max-width: 80vw;
+    margin: auto; 
+}
+.modal-header{
+    width: 100%;
+    height: fit-content;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.modal-content {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-body {
+    display: flex;
+    justify-content: center;
+}
+
+.video-player {
+    width: 100%; 
+}

@@ -1,0 +1,47 @@
+<!-- <div class="modal fade" id="loginModal"> -->
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">Welcome back</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger m-3 d-flex align-items-center">
+          <span class="me-2">{{ errorMessage }}</span>
+          <button type="button" class="btn-close ms-auto" aria-label="Close" (click)="errorMessage = null"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="loginForm" (ngSubmit)="onsubmit()">
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email" [ngClass]="{'border-danger': loginForm.get('email')?.invalid&&loginForm.get('email')?.touched,'border-success':loginForm.get('email')?.valid}">
+              <label for="email" class="form-label" [ngClass]="{'text-danger': loginForm.get('email')?.invalid&&loginForm.get('email')?.touched}">Email</label>
+              <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="error-message danger">
+                <span class="text-danger" *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</span>
+                <span class="text-danger" *ngIf="loginForm.get('email')?.errors?.['email']">Invalid Email</span>
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <input [type]="passWordField" class="form-control" formControlName="password" id="password" placeholder="Password"  [ngClass]="{'border-danger': loginForm.get('password')?.invalid&&loginForm.get('password')?.touched,'border-success':loginForm.get('password')?.valid}">
+              <label for="password" class="form-label" [ngClass]="{'text-danger': loginForm.get('password')?.invalid&&loginForm.get('password')?.touched}">Password</label>
+              <span id="icon" (click)="passwordVisibility($event)" class="password-toggle"><i [class]="icon" [ngClass]="{'mb-3':loginForm.get('password')?.invalid&&loginForm.get('password')?.touched}"></i></span>
+              <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="error-message danger">
+                <span class="text-danger" *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
+                <span class="text-danger" *ngIf="loginForm.get('password')?.errors?.['minlength']||loginForm.get('password')?.errors?.['maxlength']||loginForm.get('password')?.errors?.['pattern']">Password is invalid</span>
+                <!-- <span class="text-danger" *ngIf="loginForm.get('password')?.errors?.['maxlength']">Password cannot exceed 16 characters</span>
+                <span class="text-danger" *ngIf="loginForm.get('password')?.errors?.['pattern']">Password must include uppercase, lowercase, number, and special character</span> -->
+              </div>
+              <div class="login-footer">
+                <a class="nav-link login" href=""  data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" data-bs-dismiss="modal">Forgot password?</a>
+              </div>
+            </div>
+            <div id="loginButton">
+              <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Login</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer d-flex justify-content-center align-items-center">
+          <span>New to LearnHub? <a href="" data-bs-toggle="modal" data-bs-target="#signupModal" data-bs-dismiss="modal">Sign up</a></span>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+  <!-- <app-forgot-password class="modal fade" id="forgotPasswordModal" ></app-forgot-password> -->

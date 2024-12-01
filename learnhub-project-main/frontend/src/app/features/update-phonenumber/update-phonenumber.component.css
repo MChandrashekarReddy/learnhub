@@ -1,0 +1,42 @@
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type]
+.form-floating {
+    position: relative;
+}
+
+.error-message{
+    position: relative;
+}
+.otp-input{
+    height: fit-content;
+    width:3em;
+    height: 3em;
+    text-align: center;
+    font-size: larger;
+}
+.email-sent-img{
+    margin-top: 0;
+    width: 10vw;
+}
+.dead-line {
+    color: red;
+    animation: deadline-blink 0.5s infinite alternate;
+}
+.swal2-title {
+    font-size: 10px !important; 
+}
+@keyframes deadline-blink {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+}

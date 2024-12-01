@@ -1,0 +1,2 @@
+backup_command=/usr/lib/postgresql/17/bin/pg_dump -U postgres -h localhost -d flask -F c -b -v -f /home/chandrasekhar/Desktop/learnHub/database_backup/backups/file_name
+

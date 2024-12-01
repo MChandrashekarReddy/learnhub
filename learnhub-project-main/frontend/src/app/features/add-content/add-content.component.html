@@ -1,0 +1,100 @@
+<div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="courseModalLabel">ADD {{courseName}} Content</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close($event)"></button>
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger m-3 d-flex align-items-center">
+            <span class="me-2">{{ errorMessage }}</span>
+            <button type="button" class="btn-close ms-auto" aria-label="Close" (click)="errorMessage = null"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="contentForm">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" formControlName="content_name" id="content_name"
+                        placeholder="content name"
+                        [ngClass]="{'border-danger': contentForm.get('content_name')?.invalid&&contentForm.get('content_name')?.touched,'border-success':contentForm.get('content_name')?.valid}">
+                    <label for="content_name" class="form-label"
+                        [ngClass]="{'text-danger': contentForm.get('content_name')?.invalid&&contentForm.get('content_name')?.touched}">Content
+                        Name</label>
+                    <div *ngIf="contentForm.get('content_name')?.touched && contentForm.get('content_name')?.invalid"
+                        class="error-message danger">
+                        <span class="text-danger" *ngIf="contentForm.get('content_name')?.errors?.['required']">Content
+                            name is required</span>
+                        <span class="text-danger" *ngIf="contentForm.get('content_name')?.errors?.['pattern']">Invalid
+                            Content Name</span>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <input type="file" class="form-control" formControlName="content_doc_path" id="content_doc_path"  [(ngModel)]="address"
+                        placeholder="Content Doc"
+                        [ngClass]="{'border-danger': contentForm.get('content_doc_path')?.invalid&&contentForm.get('content_doc_path')?.touched,'border-success':contentForm.get('content_doc_path')?.valid}">
+                        <label *ngIf="contentForm.get('content_doc_path')?.untouched || contentForm.get('content_doc_path')?.valid" for="content_doc_path" class="form-label">Content Documnet</label>
+
+                    <div *ngIf="contentForm.get('content_doc_path')?.touched && contentForm.get('content_doc_path')?.invalid"
+                        class="error-message danger">
+                        <span class="text-danger"
+                            *ngIf="contentForm.get('content_doc_path')?.errors?.['required']">Content
+                            Doc is required</span>
+                        <span class="text-danger"
+                            *ngIf="contentForm.get('content_doc_path')?.errors?.['pattern']">Invalid
+                            Content Doc</span>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <input type="file" class="form-control" formControlName="content_video_path" id="content_video_path"
+                        placeholder="course img"
+                        [ngClass]="{'border-danger': contentForm.get('content_video_path')?.invalid&&contentForm.get('content_video_path')?.touched,'border-success':contentForm.get('content_video_path')?.valid}">
+                        <label *ngIf="contentForm.get('content_video_path')?.untouched || contentForm.get('content_video_path')?.valid" for="content_video_path" class="form-label">Content Video</label>
+                    <div *ngIf="contentForm.get('content_video_path')?.touched && contentForm.get('content_video_path')?.invalid"
+                        class="error-message danger">
+                        <span class="text-danger"
+                            *ngIf="contentForm.get('content_video_path')?.errors?.['required']">Content
+                            Video is required</span>
+                        <span class="text-danger"
+                            *ngIf="contentForm.get('content_video_path')?.errors?.['pattern']">Invalid
+                            Content Video</span>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <input type="file" class="form-control" formControlName="content_quiz_path" id="content_quiz_path"
+                        placeholder="course img"
+                        [ngClass]="{'border-danger': contentForm.get('content_quiz_path')?.invalid&&contentForm.get('content_quiz_path')?.touched,'border-success':contentForm.get('content_quiz_path')?.valid}">
+                    <label *ngIf="contentForm.get('content_quiz_path')?.untouched || contentForm.get('content_quiz_path')?.valid" for="content_quiz_path" class="form-label">Content Quiz</label>
+                    <div *ngIf="contentForm.get('content_quiz_path')?.touched && contentForm.get('content_quiz_path')?.invalid"
+                        class="error-message danger">
+                        <span class="text-danger"
+                            *ngIf="contentForm.get('content_quiz_path')?.errors?.['required']">Content
+                            Quiz is required</span>
+                        <span class="text-danger"
+                            *ngIf="contentForm.get('content_quiz_path')?.errors?.['pattern']">Invalid
+                            Content Quiz</span>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <input type="file" class="form-control" formControlName="content_assignment_path"
+                        id="content_assignment_path" placeholder="course img"
+                        [ngClass]="{'border-danger': contentForm.get('content_assignment_path')?.invalid&&contentForm.get('content_assignment_path')?.touched,'border-success':contentForm.get('content_assignment_path')?.valid}">
+                    <label *ngIf="contentForm.get('content_assignment_path')?.untouched || contentForm.get('content_assignment_path')?.valid" for="content_assignment_path" class="form-label">Content Assignment</label>
+                    <div *ngIf="contentForm.get('content_assignment_path')?.touched && contentForm.get('content_assignment_path')?.invalid"
+                        class="error-message danger">
+                        <span class="text-danger"
+                            *ngIf="contentForm.get('content_assignment_path')?.errors?.['required']">Content
+                            Assignment is required</span>
+                        <span class="text-danger"
+                            *ngIf="contentForm.get('content_assignment_path')?.errors?.['pattern']">Invalid
+                            Content Assignment</span>
+                    </div>
+                </div>
+
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" (click)="close($event)">cancel</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="contentForm.invalid" (click)="onSubmit()">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

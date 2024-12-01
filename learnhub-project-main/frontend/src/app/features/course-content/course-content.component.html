@@ -1,0 +1,31 @@
+<div class="content-video-container ">
+    <ul class="list-unstyled" *ngIf="videos.length>0;else noVideos">
+        <li *ngFor="let video of videos;let  i=index" class=" p-1 mb-1">
+            <div class="card"(click)="playVideo(video)" [ngClass]="{'active-card': video.content_video === currentPlayingVideo}" >
+                <div class="card-body">
+                    <input type="checkbox" class="me-3"[checked]="video.completion_percentage==100" (click)="onCheck($event,video.content_id)">
+                    <div class="card-left">
+                        <h6>{{i+1}}. {{ video.content_name }}</h6>
+                        <small><i class="fa-solid fa-tv"></i> {{video.duration}}</small>
+                    </div>
+                    <div class="card-right">
+                        <i *ngIf="video.content_video === currentPlayingVideo; else playIcon" class="fa-regular fa-circle-pause"></i>
+                        <ng-template #playIcon>
+                            <i class="fa-regular fa-circle-play"></i>
+                        </ng-template>
+                    </div>
+                </div>
+                <div *ngIf="isStudent" class="progress" style="height: 2vh;background-color:rgba(255, 255, 255, 0.044);border: 0.1rem rgba(0, 0, 0, 0.141) solid;">
+                    <div class="progress-bar" role="progressbar" [style.width.%]="video.completion_percentage" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{video.completion_percentage|number :'2.1-1'}}%</div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <ng-template #noVideos>
+        <div class="alert alert-info text-center mt-3 alert-message" role="alert">
+            <strong><i class="fa-solid fa-info-circle me-2"></i> No Content available for this course.</strong> 
+            <p class="mt-1 mb-0 text-muted">Please check back later for updates.</p>
+        </div>
+    </ng-template>
+    
+</div>

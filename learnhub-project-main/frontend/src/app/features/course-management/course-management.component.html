@@ -1,0 +1,78 @@
+<div class="container-fluid mt-4">
+    <div *ngIf="courses.length > 0" class="card">
+        <div class="card-header">
+            <h2 class="text-center">Courses Management</h2>
+        </div>
+        <div class="d-flex flex-column flex-sm-row justify-content-around align-items-center mt-3 edit-section">
+            <div class="mb-3 mb-md-0">
+                <select id="sortOptions" (change)="sortBy($event)" class="form-select">
+                    <option value="course_instructor_name">Instructor</option>
+                    <option value="course_category_name">Category</option>
+                    <option value="course_price">Price</option>
+                    <option value="ratings">Rating</option>
+                    <option value="course_created_at">Date</option>
+                    <option value="revenue">Revenue</option>
+                    <option value="no_of_enrollments">Enrollments</option>
+                </select>
+            </div>
+            <div class="mb-3 mb-md-0">
+                <div class="input-group">
+                    <input type="text" [(ngModel)]="searchCourse" (input)="onSearchChange()" placeholder="Search by name..."
+                        class="form-control" />
+                    <!-- <span class="input-group-text">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span> -->
+                </div>
+            </div>
+            <div class="filter-container dropdown">
+                <button class="btn bg-btn dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Filter
+                </button>
+                <ul class="dropdown-menu p-3" aria-labelledby="filterDropdown">
+                    <h6>Categories</h6>
+                    <div *ngFor="let category of categories" class="filter-list">
+                        <input type="checkbox" [value]="category.category_name" (change)="onCategory($event)" class="form-check-input me-1">
+                        <label class="form-check-label">{{ category.category_name }}</label>
+                    </div>
+                </ul>
+            </div>
+        </div>
+        <div class="card-body table-responsive">
+            <table class="table table-hover table-bordered text-center">
+                <thead class="thead-dark">
+                    <tr class="bg-thead">
+                        <th>Course Name</th>
+                        <th>Instructor Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>No Of Enrollments</th>
+                        <th>Revenue</th>
+                        <th>Created At</th>
+                        <th>Ratings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="filteredCourses.length === 0" class="alert alert-warning text-center">
+                        <td colspan="8">No courses available for this category</td>
+                    </tr>
+                    <tr *ngFor="let course of filteredCourses">
+                        <td>{{ course.course_name |titlecase}}</td>
+                        <td>{{ course.course_instructor_name |titlecase }}</td>
+                        <td>{{ course.course_category_name |titlecase}}</td>
+                        <td>{{ course.course_price | currency:'INR' }}</td>
+                        <td><a [routerLink]="['/admin/courses', course.course_name]">{{ course.no_of_enrollments }}</a></td>
+                        <td>{{ course.revenue | currency:'INR' }}</td>
+                        <td>{{ course.course_created_at | date : "dd-MM-yyyy HH:mm:ss" }}</td>
+                        <td>{{ course.ratings|number:'1.1-2' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <mat-paginator [length]="filteredCourses.length" [pageSize]="pageSize" [pageIndex]="pageIndex"
+        [hidePageSize]="true" (page)="onPageChange($event)" class="btn-page">
+    </mat-paginator>
+    </div>
+    <div *ngIf="courses.length == 0" class="alert alert-danger text-center mt-4">
+        <p>No courses found.</p>
+    </div>
+</div>

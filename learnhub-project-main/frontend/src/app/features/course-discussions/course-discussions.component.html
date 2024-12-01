@@ -1,0 +1,68 @@
+<section>
+    <h5>All Queries Within This Course ({{discussions.length}})</h5>
+    <div *ngIf="isStudent" class="question-container">
+        <div class="card">
+            <div class="card-body" style="border: none;">
+                <h5 class="card-title mb-2">Ask a Question</h5>
+                <form (ngSubmit)="submitQuestion()" class="input-group">
+                    <textarea type="text" class="form-control question-box"  placeholder="Type your message..."
+                        aria-label="Message" rows="3" [(ngModel)]="question" name="question" required>
+              </textarea>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn submit-button"
+                            style="outline: none; border: none; box-shadow: none;">
+                            <i class="fas fa-paper-plane icon" style="pointer-events: none;"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-4" *ngFor="let question of discussions">
+        <div class="card-header">
+            <div class="profile-section">
+                <div class="profile">
+                    <img class="profile-circle me-2"
+                        [src]="question.questioner_img ? question.questioner_img : '../../../assets/profile.png'"
+                        alt="">
+                    <h5>{{question.questioned_by|titlecase}}</h5>
+                </div>
+                <p class="me-3">{{question.asked_at|date:'fullDate'}}</p>
+            </div>
+            <div class="question">
+                <p>{{question.question}}</p>
+                <i class="fa-solid fa-arrow-down icon" style="transform: rotate(0deg);" (click)="show($event)"></i>
+            </div>
+        </div>
+        <div class="card-body" *ngIf="question.answers.length!=0" style="display: none;">
+            <div class="inner-card mt-2" *ngFor="let answer of question.answers;let i=index">
+                <div class="profile-section mt-2">
+                    <div class="profile">
+                        <img class="profile-circle  me-2"
+                            [src]="answer.answered_img ? answer.answered_img : '../../../assets/profile.png'" alt="">
+                        <h6>{{answer.answer_by}}</h6>
+                        <i *ngIf="answer.role=='instructor'" class="role ms-2">( Instructor )</i>
+                    </div>
+                    <p class="text-justify">{{answer.answered_at|date:'fullDate'}}</p>
+                </div>
+                <div class="answer">
+                    <p>{{answer.answer}}</p>
+                </div>
+                <hr *ngIf="question.answers.length>i+1" class="mt-2">
+            </div>
+        </div>
+        <div class="card-footer mt-2">
+            <form action="" class="input-group">
+                <textarea type="text" style="outline: none;border: none;box-shadow: none;"
+                    class="form-control message-box" placeholder="Type your message..." aria-label="Message"></textarea>
+                <div class="input-group-append ">
+                    <button type="submit" class="btn submit-button" style="outline: none;border: none;box-shadow: none;"
+                        (click)="onSubmit(question.question_id,$event)">
+                        <i class="fas fa-paper-plane icon" style="pointer-events: none;"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

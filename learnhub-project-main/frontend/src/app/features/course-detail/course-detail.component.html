@@ -1,0 +1,57 @@
+<div class="container mt-4">
+    <div *ngIf="course" class="card mb-4">
+      <div class="card-header">
+        <h1 class="text-center">{{ course.course_name }}</h1>
+      </div>
+      <div class="card-body row ">
+        <div class="col-md-4 text-center">
+          <img [src]="course.course_img" class="img-fluid rounded mb-3 mt-4" alt="{{ course.course_name }}">
+        </div>
+        <div class="col-md-8">
+          <p><strong>Description:</strong> {{ course.course_description }}</p>
+          <p><strong>Instructor:</strong> {{ course.course_instructor_name }}</p>
+          <p><strong>Category:</strong> {{ course.course_category_name }}</p>
+          <p><strong>Price:</strong> {{ course.course_price | currency:'INR' }}</p>
+          <p><strong>Created At:</strong> {{ course.course_created_at | date:'medium' }}</p>
+          <p><strong>No. of Enrollments:</strong> {{ course.no_of_enrollments }}</p>
+          <p><strong>Ratings:</strong> {{ course.ratings }}</p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="enrollments.length > 0" class="card">
+      <div class="card-header">
+        <h2 class="text-center">Enrollments</h2>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead class="thead-dark">
+            <tr class="bg-thead">
+              <th>User Name</th>
+              <th>Email</th>
+              <th>Enrolled Date</th>
+              <th>Amount</th>
+              <th>Payment Mode</th>
+              <th>Payment Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let enrollment of enrollments">
+              <td>{{ enrollment.user_name }}</td>
+              <td><a routerLink="/admin/studentDetail"  (click)="onclick($event)">{{ enrollment.user_email }}</a></td>
+              <td>{{ enrollment.enrolle_date | date:'mediumDate' }}</td>
+              <td>{{ enrollment.amount | currency:"INR" }}</td>
+              <td>{{ enrollment.payment_mode }}</td>
+              <td>{{ enrollment.payment_at | date:'medium' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div *ngIf="enrollments.length === 0">
+      <p class="text-center">No enrollments available for this course.</p>
+    </div>
+  </div>
+  <div *ngIf="!course" class="alert alert-danger text-center mt-4">
+    <p>No course details found.</p>
+  </div>
+  

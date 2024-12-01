@@ -1,0 +1,38 @@
+<section class="container col-lg-8 col-md-10 col-sm-12">
+    <div class="course-overview card shadow-sm p-4 mb-4">
+        <h3 class="mb-3">{{courseName}} Overview</h3>
+        <form [formGroup]="courseOverviewForm" class="mt-2">
+            <div class="mb-3 d-flex flex-column align-items-center justify-content-between">
+                <img [src]="courseOverviewForm.get('course_img')?.value"
+                     alt="Course Image" 
+                     class="img-fluid rounded mb-2" 
+                     style="max-width: 100%; height: auto;">
+                <button type="button" class="btn btn-sm btn-outline-primary" (click)="triggerFileInput()"[disabled]="mode=='Edit'">
+                    <i class="fa-regular fa-pen-to-square"></i> Edit Image
+                </button>
+            </div>
+
+            <div class="mb-3">
+                <label for="course_description" class="form-label">Course Description</label>
+                <textarea id="course_description" 
+                          formControlName="course_description" 
+                          class="form-control" 
+                          rows="4" 
+                          placeholder="Enter course description" [readOnly]="mode=='Edit'"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="course_price" class="form-label">Course Price</label>
+                <input id="course_price" 
+                       type="text" 
+                       formControlName="course_price" 
+                       class="form-control" 
+                       placeholder="Enter price in USD"
+                       [readOnly]="mode=='Edit'">
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary" (click)="submitCourse()">{{mode}}</button>
+            </div>
+        </form>
+    </div>
+</section>

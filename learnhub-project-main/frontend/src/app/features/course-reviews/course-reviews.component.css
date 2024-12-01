@@ -1,0 +1,97 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.feedback{
+    width: inherit;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.progress-bar{
+    background-color:#FFDF00;
+}
+.progress{
+    margin-top: 1%;
+}
+
+.profile-circle {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 100%;
+    background-color:rgba(38, 106, 148, 0.295); 
+    color: rgba(255, 255, 255, 0.664);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+    text-transform: uppercase; 
+  }
+  .profile-circle:hover{
+    background-color:rgba(38, 106, 148, 0.788); 
+    color: rgb(255, 255, 255);
+  }
+  .profile{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .review-profile{
+    display: flex;
+    align-items:center;
+    justify-content: flex-start;
+  }
+  .review-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1%;
+  }
+  ul li{
+    list-style: none;
+    padding: 1%;
+    border: rgba(0, 0, 0, 0.159) solid 0.01rem;
+  }
+  .star{
+    font-size: 2rem;
+  }
+  .alert-message{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    font-size: larger;
+}
+  @media only screen and (max-width: 600px) {
+    .progress{
+        width: 20vw;
+    }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+    .progress{
+        width: 25vw;
+    }
+}
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+    .progress{
+        width:30vw;
+    }
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+    .progress{
+        width: 40vw;
+    }
+}
+
+@media only screen and (min-width: 1441px) {
+    .progress{
+        width: 50vw;
+    }
+}

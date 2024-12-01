@@ -1,0 +1,33 @@
+<section>
+   <ul *ngIf="materials.length>0;else noMaterials">
+    <li *ngFor="let material of materials; let i = index" class="card mt-2">
+        <div>
+            <div class="card-title" (click)="openCardBody($event)">
+                <h6 style="pointer-events: none;">{{i + 1}}. {{material.content_name}}</h6>
+                <i class="fa-solid fa-chevron-down pe-2" style="transform: rotate(-90deg);pointer-events: none;" ></i>         
+            </div>
+            <ul class="card-body" style="display: none;">
+                <li class="mt-1 card-item">
+                    <a [routerLink]="['/student/pdf-viewer',material.content_notes]" >{{ material.content_name }} - Notes</a>
+                    <i class="icon fa-regular fa-circle-down" (click)="onDownload($event,material.content_notes,material.content_name+'-notes')"></i>
+                    <i class="icon fa fa-spinner fa-spin" style="display: none;"></i>
+                    <i class="icon fa-regular fa-circle-check" style="display: none;"></i>
+                </li>
+                <li class="mt-1 card-item" *ngIf="material.quiz!=null">
+                    <a [href]="material.quiz" target="_blank">{{material.content_name}} - Quiz</a>
+                    <i class="icon fa-regular fa-circle-down" (click)="onDownload($event,material.quiz,material.content_name+'-quiz')"></i>
+                    <i class="icon fa fa-spinner fa-spin" style="display: none;"></i>
+                    <i class="icon fa-regular fa-circle-check" style="display: none;"></i>
+                </li>
+            </ul>
+        </div>
+    </li>
+   </ul>
+   <ng-template #noMaterials>
+    <div class="alert alert-info text-center mt-3 alert-message" role="alert">
+        <strong><i class="fa-solid fa-info-circle me-2"></i> No materials available for this course.</strong> 
+        <p class="mt-1 mb-0 text-muted">Please check back later for updates.</p>
+    </div>
+</ng-template>
+
+</section>

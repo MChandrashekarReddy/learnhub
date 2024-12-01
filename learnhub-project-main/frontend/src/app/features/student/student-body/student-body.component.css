@@ -1,0 +1,124 @@
+
+.course_img{
+    height: 30vh;
+}
+.card-text{
+    height: 20vh;
+    overflow: scroll;
+}
+.top-course-container{
+    height: 60vh;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.705);
+}
+.top-course-card{
+    padding: 0.1em;
+    height:80%;
+    width: 100%;
+    border: black solid 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2); 
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.top-course-card-body{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    text-decoration: none;
+}
+.top-course-card-img img{
+    height:40vh;
+}
+
+.top-course-card-footer{
+    display: flex;
+    width: inherit;
+    align-items: center;
+    justify-content: space-between;
+}
+.carousel-inner{
+  background-color: #385776d8;
+  color: white;
+  padding: 2%;
+}
+.top-course-card {
+    margin: 20px 0;
+
+    text-decoration: none!;
+}
+
+@media (max-width: 768px) {
+    .top-course-card-body {
+        padding: 15px;
+    }
+}
+.registerd-course-card-img{
+    height:25vh;
+}
+
+.overflow-auto {
+    overflow-x: auto;
+    white-space: nowrap; 
+}
+
+.registerd-course-card {
+    min-width: 250px;
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2); 
+    border: 0.01rem solid black;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+#registerd-course-container{
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid black;
+    padding: 10px;
+}
+.welcome-container {
+    text-align: center;
+    background-color: #f9f9f9; 
+    border:0.1rem solid #e1e1e1;
+    border-radius: 1rem;
+    padding:1%;
+    box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.1);
+    margin: 2% auto; 
+    max-width: fit-content;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+h1 {
+    color: #333; 
+    font-size: 2.5em; 
+    margin-bottom: 5%;
+}
+
+.user-name {
+    color:  #2c3e50cf; 
+    font-weight: bold; 
+}
+
+.welcome-message {
+    font-size: 1.2em; 
+    color: #666; 
+}
+
+.fa-heart{
+    font-size: larger;
+    
+}
+.fa-solid{
+    color:  #FF0000;
+}
+.new_course{
+    height: 5vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index:2;
+  }

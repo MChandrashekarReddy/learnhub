@@ -1,0 +1,120 @@
+<section class="container-fluid">
+    <div *ngIf="isReviewsAvailable;else noReviews">
+    <div class="feedback">
+        <div class="course-rating">
+            <h1>{{courseReviews.average_rating|number: '1.1-1'}}</h1>
+            <ng-container *ngFor="let star of getStars(courseReviews.average_rating)">
+                <i class="fa" [ngClass]="star" style="color:#FFDF00"></i>
+            </ng-container>
+            <h6>Course Rating</h6>
+        </div>
+        <div class="course-rating-bars">
+
+            <div class="d-flex align-items-center justify-content-center">
+                <ng-container *ngFor="let star of getStars(5)">
+                    <i class="fa" [ngClass]="star" style="color:#FFDF00"></i>
+                </ng-container>
+                <div class="progress ms-1">
+                    <div class="progress-bar" role="progressbar" [style.width.%]="courseReviews.five_star_ratings_per"
+                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="ms-2">{{courseReviews.five_star_ratings_per|number: '2.1-1'}} %</small>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-center">
+                <ng-container *ngFor="let star of getStars(4)">
+                    <i class="fa" [ngClass]="star" style="color:#FFDF00"></i>
+                </ng-container>
+                <div class="progress ms-1">
+                    <div class="progress-bar" role="progressbar" [style.width.%]="courseReviews.four_star_ratings_per"
+                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="ms-2">{{courseReviews.four_star_ratings_per|number: '2.1-1'}} %</small>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-center">
+                <ng-container *ngFor="let star of getStars(3)">
+                    <i class="fa" [ngClass]="star" style="color:#FFDF00"></i>
+                </ng-container>
+                <div class="progress ms-1">
+                    <div class="progress-bar" role="progressbar" [style.width.%]="courseReviews.three_star_ratings_per"
+                        aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="ms-2">{{courseReviews.three_star_ratings_per|number: '2.1-1'}} %</small>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-center">
+                <ng-container *ngFor="let star of getStars(2)">
+                    <i class="fa" [ngClass]="star" style="color:#FFDF00"></i>
+                </ng-container>
+                <div class="progress ms-1">
+                    <div class="progress-bar" role="progressbar" [style.width.%]="courseReviews.two_star_ratings_per"
+                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="ms-2">{{courseReviews.two_star_ratings_per|number: '2.1-1'}} %</small>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-center">
+                <ng-container *ngFor="let star of getStars(1)">
+                    <i class="fa" [ngClass]="star" style="color:#FFDF00"></i>
+                </ng-container>
+                <div class="progress ms-1">
+                    <div class="progress-bar" role="progressbar" [style.width.%]="courseReviews.one_star_ratings_per"
+                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="ms-2">{{courseReviews.one_star_ratings_per|number: '2.1-1'}} %</small>
+            </div>
+            
+        </div>
+    </div>
+    <hr class="mt-4">
+    <div class="reviews">
+        <div *ngIf="isStudent" class="review-container">
+            <h4>Leave a Review</h4>
+            <div class="feedback-section">
+              <textarea id="feedback" [(ngModel)]="feedback" rows="4" placeholder="Write your feedback here" class="w-100"></textarea>
+            </div>
+            <div class="rating-section d-flex align-items-center justify-content-around mt-3">
+              <div class="stars">
+                <i [class]="rating>=1 ? 'fa fa-star star ms-1' : 'far fa-star star ms-1'" (click)="setRating(1)" style="color:#FFDF00"></i>
+                <i [class]="rating>=2 ? 'fa fa-star star ms-1' : 'far fa-star star ms-1'" (click)="setRating(2)" style="color:#FFDF00"></i>
+                <i [class]="rating>=3 ? 'fa fa-star star ms-1' : 'far fa-star star ms-1'" (click)="setRating(3)" style="color:#FFDF00"></i>
+                <i [class]="rating>=4 ? 'fa fa-star star ms-1' : 'far fa-star star ms-1'" (click)="setRating(4)" style="color:#FFDF00"></i>
+                <i [class]="rating>=5 ? 'fa fa-star star ms-1' : 'far fa-star star ms-1'" (click)="setRating(5)" style="color:#FFDF00"></i>
+              </div>
+              <button (click)="submitReview()" class="btn btn-primary p-2">Submit Review</button>
+            </div>
+            
+          </div>
+          <hr class="mt-3 mb-2" >
+        <ul *ngFor="let review of courseReviews.reviews">
+            <li class="mt-1">
+                <div class="review-top">
+                    <div class="review-profile">
+                        <img class="profile-circle  me-2"
+                            [src]="review.user_img ? review.user_img : '../../../assets/profile.png'" alt="">
+                        <div class="profile ms-1">
+                            <h6>{{review.user_name|titlecase}}</h6>
+                            <div>
+                                <ng-container *ngFor="let star of getStars(review.rating)">
+                                    <i class="fa" [ngClass]="star" style="color:#FFDF00"></i>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <small>{{review.review_at|date :'medium'}}</small>
+                </div>
+                <div class="review-body">
+                    <p>{{review.review_content}}</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<ng-template #noReviews>
+    <div class="alert alert-info text-center mt-3 alert-message" role="alert">
+        <strong><i class="fa-solid fa-info-circle me-2"></i> No materials available for this course.</strong> 
+        <p class="mt-1 mb-0 text-muted">Please check back later for updates.</p>
+    </div>
+</ng-template>
+</section>

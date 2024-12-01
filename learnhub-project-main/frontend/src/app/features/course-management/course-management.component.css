@@ -1,0 +1,25 @@
+.filter-container {
+    position: relative;
+    display: inline-block; 
+    
+}
+
+.filter-container ul{
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    padding:1em; 
+    z-index: 1000; 
+}
+
+.filter-container:hover ul {
+    display: block; 
+}
+
+.filter-container:hover {
+    z-index: 1001;
+}
+.filter-list{
+    width:10vw;
+}

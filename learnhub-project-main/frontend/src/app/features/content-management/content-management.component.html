@@ -1,0 +1,27 @@
+<section class="container mt-4 card">
+    <div  id="videoplayer">
+        <div *ngIf="videoSrc; else noVideoMessage" class="video-container">
+            <video #videoPlayer id="videoPlayer" [src]="videoSrc" controls (timeupdate)="onTimeUpdate()"></video>
+        </div>
+        <ng-template #noVideoMessage>
+            <div class="alert alert-warning text-center mt-3 alert-message">
+                <i class="fa-solid fa-video-slash me-2"></i>
+                <strong>No video available</strong>
+                <p class="mb-0">Please check back later.</p>
+            </div>
+        </ng-template>
+    </div>
+    <hr>
+    <ul class="card-header">
+        <li><a (click)="navigateTo('content')">Content</a></li>
+        <li><a (click)="navigateTo('overview')">Overview</a></li>
+        <li><a (click)="navigateTo('discussions')">Q&A</a></li>
+        <li><a (click)="navigateTo('notes')">Notes</a></li>
+        <li><a (click)="navigateTo('assignments')">Assignments</a></li>
+        <li><a (click)="navigateTo('reviews')">Reviews</a></li>
+    </ul>
+    <section class="card-body">
+        <router-outlet></router-outlet>   
+    </section>
+</section>
+
